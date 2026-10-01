@@ -236,3 +236,52 @@ addEventListener("keydown", e => { const k = e.key.toLowerCase(); ki = k === seq
   if (k === "k" && ki === 0) return;
   if (ki === seq.length || "konami" === (window._kb = (window._kb || "") + (/^[a-z]$/.test(k) ? k : "")).slice(-6)) {
     document.body.classList.toggle("disco"); toast("🪩 DISCO MODE — mweshimiwa party"); confetti(innerWidth / 2, 200, 60); addXP(25, "disco-king"); ki = 0; window._kb = ""; } });
+
+// --- LIVE DEMOS ---
+// Terminal typing demo
+const dtLines = [
+  ["$", "python engine.py run --n 5000"],
+  ["✓", "parse_fail_rate=0.0 · 29/29 types"],
+  ["$", "train-nn --n 100000 --noise 0.35"],
+  ["✓", "4.31M params · macro-F1 1.0"],
+  ["$", "finance --in parsed.json"],
+  ["✓", "income 706k · credit gap 170k"],
+  ["$", "onnx export → android"],
+  ["✓", "model.onnx ready · 17MB"],
+];
+let dtIdx = 0;
+setInterval(() => { const dt = $("dtBody"); if (!dt) return;
+  const [p, t] = dtLines[dtIdx % dtLines.length];
+  dt.innerHTML += `<span class="c">${p}</span> <span class="g">${t}</span>\n`;
+  dtIdx++;
+  if (dtIdx > 12) dt.innerHTML = "";
+}, 1400);
+
+// Weave demo canvas
+const dw = $("demoWeave");
+if (dw) { const dctx = dw.getContext("2d");
+  const dThreads = [["#c8f04a", 0], ["#8b7bff", 5], ["#ffb224", 10], ["#06b6d4", 15]];
+  let dLast = null, dAngle = 0;
+  setInterval(() => { dAngle += .03;
+    const x = dw.width / 2 + Math.cos(dAngle) * 120, y = dw.height / 2 + Math.sin(dAngle * 1.3) * 60;
+    if (dLast) { dThreads.forEach(([col, off]) => { dctx.strokeStyle = col; dctx.lineWidth = 2; dctx.beginPath();
+      dctx.moveTo(dLast.x + off * .2, dLast.y + off * .2);
+      dctx.quadraticCurveTo((dLast.x + x) / 2 + Math.sin(x) * 6, (dLast.y + y) / 2, x + off * .2, y + off * .2); dctx.stroke(); }); }
+    dLast = { x, y };
+    if (dAngle > 40) { dctx.clearRect(0, 0, dw.width, dw.height); dAngle = 0; dLast = null; }
+  }, 50); }
+
+// Poetry typing demo
+const poemLines = ["The matatu hums at dawn,", "Nairobi wakes in gold.", "I weave my threads —", "body, mind, craft, soul.", "Slow web. Deep work."];
+let poemIdx = 0, poemChar = 0, poemDel = false;
+setInterval(() => { const pt = $("poemText"); if (!pt) return;
+  const line = poemLines[poemIdx];
+  if (!poemDel && poemChar <= line.length) { pt.textContent = poemLines.slice(0, poemIdx).join("\n") + (poemIdx ? "\n" : "") + line.slice(0, poemChar); poemChar++; }
+  else if (!poemDel) { poemDel = true; return; }
+  else if (poemChar > 0) { poemChar--; pt.textContent = poemLines.slice(0, poemIdx).join("\n") + (poemIdx ? "\n" : "") + line.slice(0, poemChar); }
+  else { poemDel = false; poemIdx = (poemIdx + 1) % poemLines.length; if (poemIdx === 0) pt.textContent = ""; }
+}, 60);
+
+// Waveform demo
+const wf = $("waveform");
+if (wf) { for (let i = 0; i < 24; i++) { const b = document.createElement("i"); wf.appendChild(b); } }
