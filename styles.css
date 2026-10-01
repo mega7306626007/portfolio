@@ -290,12 +290,23 @@ footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wr
 
 .overlay { position: fixed; inset: 0; background: rgba(28,24,17,.45); backdrop-filter: blur(4px); z-index: 100; display: none; }
 .overlay.open { display: block; }
-.modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-48%); opacity: 0; pointer-events: none; background: var(--card); border: 1px solid var(--line2); border-radius: 16px; max-width: 540px; width: calc(100vw - 40px); padding: 34px; z-index: 101; transition: all .3s var(--ease); }
+.modal { position: fixed; left: 50%; top: 50%; transform: translate(-50%,-48%); opacity: 0; pointer-events: none; background: var(--card); border: 1px solid var(--line2); border-radius: 16px; max-width: 620px; width: calc(100vw - 40px); padding: 34px; z-index: 101; transition: all .3s var(--ease); max-height: 86vh; overflow-y: auto; }
 .modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%,-50%); }
 .modal h3 { font-family: var(--font-s); font-size: 28px; font-weight: 400; margin: 8px 0 12px; }
 .modal p { color: var(--muted); line-height: 1.75; font-size: 13px; white-space: pre-wrap; }
 .modal-x { position: absolute; top: 12px; right: 12px; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 6px; width: 28px; height: 28px; }
 .modal-actions { margin-top: 22px; }
+.cs-hook { font-family: var(--font-s); font-size: 16.5px; line-height: 1.6; color: var(--ink); font-style: italic; border-left: 3px solid var(--accent); padding-left: 14px; margin-bottom: 22px; }
+#modalBody h5 { font-family: var(--font-m); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-ink); margin: 22px 0 8px; }
+#modalBody ul { list-style: none; padding: 0; margin: 0; }
+#modalBody li { position: relative; padding-left: 18px; font-size: 12.5px; line-height: 1.7; color: var(--muted); margin-bottom: 7px; }
+#modalBody li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-family: var(--font-m); font-size: 11px; }
+#modalBody li b, #modalBody p b { color: var(--ink); }
+.cs-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 20px 0; }
+.cs-stats span { text-align: center; border: 1px solid var(--line); border-radius: 9px; padding: 10px 4px; font-family: var(--font-m); font-size: 8.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+.cs-stats b { display: block; font-family: var(--font-s); font-size: 19px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--accent-ink); margin-bottom: 2px; }
+.cs-end { font-size: 12.5px !important; border-top: 1px solid var(--line); padding-top: 14px; }
+#modalBody a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
 
 .palette { position: fixed; top: 18%; left: 50%; transform: translateX(-50%); width: min(440px, calc(100vw - 40px)); background: var(--card); border: 1px solid var(--line2); border-radius: 12px; z-index: 200; display: none; overflow: hidden; box-shadow: 0 30px 70px rgba(28,24,17,.3); }
 .palette.open { display: block; }

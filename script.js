@@ -51,10 +51,130 @@ document.querySelectorAll(".f").forEach(btn => btn.addEventListener("click", () 
   document.querySelectorAll(".f").forEach(b => b.classList.remove("active")); btn.classList.add("active");
   const f = btn.dataset.filter; document.querySelectorAll("#projectGrid .proj").forEach(c => c.classList.toggle("hide", f !== "all" && !c.dataset.tags.includes(f))); }));
 
+const CASES = {
+"Jarvis (Mwesh) — Voice Assistant": `
+<p class="cs-hook">Every other assistant wants your email, your cloud, and your prayers for the Wi-Fi to hold. Jarvis wants none of it. Meet Mwesh — a butler that lives <em>inside</em> your phone.</p>
+<h5>The brief</h5>
+<p>Build a voice assistant for a Nairobi reality: cheap data, patchy signal, and a phone that's got better things to do than stream your voice to a server farm.</p>
+<h5>What's actually under the hood</h5>
+<ul>
+<li><b>On-device ONNX inference</b> — the model runs local. No round trip, no bill, no eavesdropper.</li>
+<li><b>Room-backed memory</b> — alarms, notes, reminders, full conversations, all queryable, all yours.</li>
+<li><b>Command router</b> — time, calculator, jokes, timers: deterministic first, neural where it counts.</li>
+<li><b>Speech + TTS</b> — hears you, answers out loud, in a voice you can live with.</li>
+<li><b>Trilingual corpus</b> — English, Kiswahili, French. 80+ source files, 100+ tests.</li>
+</ul>
+<div class="cs-stats"><span><b>80+</b>source files</span><span><b>100+</b>tests</span><span><b>EN·SW·FR</b>languages</span><span><b>0</b>cloud calls</span></div>
+<p class="cs-end">It's currently tied to my wrist-level daily use and the full build is on <a href="https://github.com/mega7306626007/mwesh" target="_blank" rel="noopener">GitHub</a>. Clone it. Wake it up. <b>It doesn't need your password to impress you.</b></p>`,
+
+"PesaFlow — Student Finance": `
+<p class="cs-hook">Look at you — salary hits on the 1st, and by the 10th you're negotiating with a bowl of *unga* like it's a hostage situation. Receipts live in three apps, M-PESA statements nobody reads, and "I'll budget next week" is a personality trait now. <em>Well, look no further than PesaFlow.</em></p>
+<h5>The diagnosis</h5>
+<p>Student money isn't a spreadsheet problem — it's an <b>irregular-income, peer-pressure, airtime-leakage</b> problem. Generic finance apps assume you get paid monthly and never split a pizza bill with four friends. Campus does neither.</p>
+<h5>What I built</h5>
+<ul>
+<li><b>7 input sources</b> — manual entry, M-PESA SMS parser (10+ formats), natural-language parser (<i>&ldquo;nikiwe na laso&rdquo; = money out</i>), share-to-app, on-device OCR receipts, CSV import, dedupe across all of them.</li>
+<li><b>Budgets that survive the month</b> — envelopes with actual campus semantics: transport, *mtaro*, photocopy, *nyama choma Fridays*.</li>
+<li><b>Debt-payoff planner</b> — because "bro nipee 200" compounds in ways friendship can't.</li>
+<li><b>Investment simulator</b> — watch *mbeki* grow before risking a shilling.</li>
+<li><b>Analytics</b> — the truth, charted. No sugarcoating.</li>
+</ul>
+<div class="cs-stats"><span><b>7</b>input sources</span><span><b>134+</b>Kotlin files</span><span><b>KES</b>only</span><span><b>0</b>accounts/servers</span></div>
+<p class="cs-end">134+ Kotlin files, verified debug build, offline-first, zero accounts. Your money never leaves the device — mostly because <b>there's nobody to send it to.</b> <a href="https://github.com/mega7306626007/PesaFlow" target="_blank" rel="noopener">Open the code</a> and start surviving the month properly.</p>`,
+
+"SMS Engine · M-PESA Neural": `
+<p class="cs-hook">Your M-PESA inbox is a novel: 29 plot twists (Fuliza, M-Shwari, KCB M-PESA, Okoa, Pochi, Ziidi…), unreliable narrators, and typos on every page. Regex reads page one. The neural net <em>finishes the book</em> — typos, Sheng, and truncation included.</p>
+<h5>Why regex alone dies</h5>
+<p>Users type "MPSA", "Fuliza cut", "boss umeniweka" — and truncation eats the tail. Pattern matching hits <b>74%</b> and taps out. That's not good enough when the next line is a budget decision.</p>
+<h5>What's inside</h5>
+<ul>
+<li><b>10+ format parser</b> — every real M-PESA template, 0% fail on clean input.</li>
+<li><b>Pattern-probability layer</b> — soft matching when the message is mangled.</li>
+<li><b>Finance intelligence</b> — income vs credit gap, month runway, "are you Okoa-dependent?" detection.</li>
+<li><b>4.31M-parameter neural classifier</b> — trained on 100k messages, 35% noise-augmented so typos are <i>the training set, not the exception.</i></li>
+<li><b>ONNX export</b> — the same brain runs on-device inside PesaFlow.</li>
+</ul>
+<div class="cs-stats"><span><b>100%</b>noisy accuracy</span><span><b>74%→100%</b>vs regex</span><span><b>29</b>tx types</span><span><b>4.31M</b>params</span></div>
+<p class="cs-end">100k messages in, macro-F1 1.0 out, 100% on the noisy gauntlet where regex scores 74. Try it yourself in <b>the Lab</b> above — paste your filthiest money SMS.</p>`,
+
+"Calendar Rescheduler": `
+<p class="cs-hook">Be honest: you saw the 9am task and thought <em>"later."</em> Later never came. Your calendar is a graveyard of good intentions. This is the "later" that actually <b>shows up.</b></p>
+<h5>The truth about to-do lists</h5>
+<p>Lists are where tasks go to feel guilty. A list can't move a meeting. A list doesn't know you're free at 14:30. So I stopped making lists and started building an <b>anti-procrastination OS</b> on top of Google Calendar.</p>
+<h5>How it works</h5>
+<ul>
+<li><b>Push to next free slot</b> — freebusy-aware search across 8:00–22:45, day/week/month views.</li>
+<li><b>Class-cancelled overfill queue</b> — a lecture dies, its tasks re-enter a priority queue and get re-slotted automatically.</li>
+<li><b>6-hour undo stack</b> — regret is a feature: anything within 6h comes back with one tap.</li>
+<li><b>Protected blocks</b> — your sleep, meals, and DND hours are <i>never</i> touched. The scheduler respects you.</li>
+<li><b>PWA + native APK</b> — Android WebView wrapper, installs like a real app.</li>
+</ul>
+<div class="cs-stats"><span><b>v16</b>shipped</span><span><b>6h</b>undo window</span><span><b>8–22:45</b>search window</span><span><b>0</b>stolen blocks</span></div>
+<p class="cs-end">Version 16 — and yes, it runs <b>my</b> life daily, including the day this site went out. Proof: you're reading it. <a href="https://github.com/mega7306626007/calendar-rescheduler" target="_blank" rel="noopener">Take the wheel</a>.</p>`,
+
+"Transcriber — Kiswahili Voice": `
+<p class="cs-hook">Sermon. Lecture. Interview in Kiswahili. Podcast your aunt sent at 6am. It all becomes text — <b>and the audio never leaves your machine.</b> No cloud, no "we may use your data", no surprises.</p>
+<h5>The problem</h5>
+<p>Transcription tools are English-first, cloud-only, and quietly expensive. Kiswahili speakers get breadcrumbs — no fine-tune path, no synced review, and their audio gets uploaded to who-knows-where.</p>
+<h5>What I built</h5>
+<ul>
+<li><b>Synced player + transcript</b> — click a line, the audio jumps. Fix a word, the timestamp follows.</li>
+<li><b>SRT editor</b> — clean subtitles out, ready for YouTube or the archive.</li>
+<li><b>Kiswahili support</b> — not an afterthought: real accuracy on the language people actually speak here.</li>
+<li><b>Whisper fine-tuning pipeline</b> — feed it your domain (court, clinic, classroom) and make it sharper.</li>
+</ul>
+<div class="cs-stats"><span><b>SW</b>first-class</span><span><b>Local</b>audio stays home</span><span><b>SRT</b>export</span><span><b>Fine-tune</b>pipeline</span></div>
+<p class="cs-end">Long audio in, timestamped knowledge out. <a href="https://github.com/mega7306626007/transcriber" target="_blank" rel="noopener">Run it locally</a> — I dare you to find the part that phones home.</p>`,
+
+"PyChat — Advanced Offline Chatbot": `
+<p class="cs-hook">Imagine a chatbot that remembers you, thinks before answering, works with zero bars of signal — and <em>still</em> offers to call an LLM when the question's above its pay grade. That's PyChat: the offline brain with an optional cloud mouthpiece.</p>
+<h5>Why "offline" is the whole point</h5>
+<p>Most chat demos collapse when the Wi-Fi does. In Nairobi that's not an edge case — it's Tuesday. So the architecture is <b>local-first by default</b>, hybrid by choice.</p>
+<h5>What's inside</h5>
+<ul>
+<li><b>Memory module</b> — remembers context across conversations, on disk, yours alone.</li>
+<li><b>Intent router</b> — deterministic routing first; the model only gets paid when needed.</li>
+<li><b>Neural nets + sklearn</b> — classification that trains on <i>your</i> conversation style.</li>
+<li><b>LLM hybrid</b> — optional escalation to a big model for hard questions. Optional being the operative word.</li>
+<li><b>Flask web face</b> — a real UI for it, deploy-ready.</li>
+</ul>
+<div class="cs-stats"><span><b>14</b>modules</span><span><b>0</b>required APIs</span><span><b>Hybrid</b>LLM optional</span><span><b>Live</b>on Render</span></div>
+<p class="cs-end">It's live right now — <a href="https://pychat-hbih.onrender.com/" target="_blank" rel="noopener">go pick a fight with it</a> — and the source is at <a href="https://github.com/mega7306626007/pychat" target="_blank" rel="noopener">github.com/mega7306626007/pychat</a>. Ask it something rude. It has memory.</p>`,
+
+"The Heart v4 — Poetry Experience": `
+<p class="cs-hook">You type a line of poetry. A neural net finishes the stanza. <em>In your browser.</em> No server reads your verse, no API key, no waiting — just you, a model, and the audacity to rhyme at midnight.</p>
+<h5>The idea</h5>
+<p>Art that thinks back — Mwesh's poetry wired to a small neural continuation model that runs fully client-side. It's a statement as much as a feature: creativity doesn't need permission from a datacenter.</p>
+<h5>What's under it</h5>
+<ul>
+<li><b>In-browser neural continuation</b> — model served as static assets, inference on your CPU.</li>
+<li><b>Live on Vercel</b> — zero backend, zero cost, zero telemetry.</li>
+<li><b>The Heart family</b> — v2 added voice prompts; v4 is the one that <i>writes back.</i></li>
+</ul>
+<div class="cs-stats"><span><b>0</b>servers</span><span><b>In-browser</b>neural net</span><span><b>v4</b>current</span><span><b>Live</b>on Vercel</span></div>
+<p class="cs-end">Don't take my word for it: <a href="https://the-heart-4.vercel.app" target="_blank" rel="noopener">open it</a>, type one honest line, and see what the machine dares to say back. <a href="https://github.com/mega7306626007/the-heart-4" target="_blank" rel="noopener">Source here</a>.</p>`,
+
+"Parlons — French for Kenyans": `
+<p class="cs-hook">Paris textbooks will teach you <i>le subjonctif</i> and not a single word for arguing with your Sheng-speaking friends. Parlons teaches French the Nairobi way — from <em>"niaje"</em> to <em>"nom d'une pipe."</em></p>
+<h5>The gap</h5>
+<p>Kenyans learn French from material written for people who grew up queuing at boulangeries. Nobody explains the meaning gaps, nobody warns you that textbook French and campus French are different sports, and nobody makes it stick.</p>
+<h5>What I built</h5>
+<ul>
+<li><b>65 lessons, ~860 phrases</b> — structured units with real conversation targets.</li>
+<li><b>Simba the chat partner</b> — 12 scenarios with fuzzy correction, so mistakes die in practice, not in a quiz.</li>
+<li><b>Leitner SRS</b> — spaced repetition tuned to what you keep getting wrong.</li>
+<li><b>13 exercise types</b> — no single-question fatigue.</li>
+<li><b>Offline speech</b> — Vosk models on-device. Practice pronunciation on the bus, in a tunnel, wherever.</li>
+<li><b>Zero accounts, zero keys</b> — install, learn, exist.</li>
+</ul>
+<div class="cs-stats"><span><b>65</b>lessons</span><span><b>~860</b>phrases</span><span><b>13</b>exercise types</span><span><b>SW·ENG·SHENG</b>bridge</span></div>
+<p class="cs-end">French for Kenyans, built by one. <a href="https://github.com/mega7306626007/Parlons" target="_blank" rel="noopener">Clone it</a> — Simba is waiting, and he does not go easy.</p>`
+};
+
 const overlay = $("overlay"), modal = $("modal");
-function openModal(t, b) { $("modalTitle").textContent = t; $("modalBody").textContent = b; overlay.classList.add("open"); modal.classList.add("open"); }
+function openModal(t, b) { $("modalTitle").textContent = t; $("modalBody").innerHTML = b; overlay.classList.add("open"); modal.classList.add("open"); modal.scrollTop = 0; }
 function closeModal() { overlay.classList.remove("open"); modal.classList.remove("open"); }
-document.querySelectorAll(".open-modal").forEach(b => b.addEventListener("click", e => { const c = e.target.closest(".proj"); openModal(c.dataset.title, c.dataset.body); }));
+document.querySelectorAll(".open-modal").forEach(b => b.addEventListener("click", e => { const c = e.target.closest(".proj"); openModal(c.dataset.title, CASES[c.dataset.title] || c.dataset.body); }));
 $("modalX").addEventListener("click", closeModal); overlay.addEventListener("click", closeModal); $("modalCta").addEventListener("click", closeModal);
 
 const termOut = $("termOut");
