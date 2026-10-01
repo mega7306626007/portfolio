@@ -58,7 +58,7 @@
       <span class="line">Software that</span>
       <span class="line">respects <em>people.</em></span>
     </h1>
-    <p class="lede reveal">I'm <strong>Emmanuel</strong> — I build AI, fintech, and mobile systems from Nairobi. A voice assistant that runs entirely on-device. A neural network that reads M-PESA messages through typos and Sheng. A calendar that fights procrastination. French that speaks Sheng. Everything below runs, not just renders.</p>
+    <p class="lede reveal">I'm <strong>Emmanuel</strong>. I build apps in Nairobi — a voice assistant that lives on your phone, a model that reads M-PESA texts through typos and Sheng, a calendar that won't let me procrastinate, French that speaks Sheng. Nothing down there is a mockup. It all runs.</p>
     <div class="hero-ctas reveal">
       <a href="#work" class="btn primary" data-hover>Selected work</a>
       <a href="#contact" class="btn ghost" data-hover>Get in touch</a>
@@ -66,7 +66,7 @@
     <div class="hero-meta reveal">
       <div><span>Response time</span><b>&lt; 48 hours</b></div>
       <div><span>Currently</span><b>Open for work</b></div>
-      <div><span>Proof</span><b>0% parse fail · 100% noisy acc</b></div>
+      <div><span>Numbers</span><b>0% parse fail · 100% noisy acc</b></div>
     </div>
     <div class="type-row reveal"><span class="dim">~/mweshimiwa&gt;</span> <span id="typer"></span><span class="caret">▌</span></div>
   </div>
@@ -102,7 +102,7 @@
   <div class="sec-head reveal">
     <div>
       <div class="sec-no">01 — Selected work</div>
-      <h2>Proof, not <em>promises.</em></h2>
+      <h2>Stuff I've actually <em>shipped.</em></h2>
     </div>
     <div class="filters" role="tablist">
       <button class="f active" data-filter="all" data-hover>All</button>
@@ -221,8 +221,8 @@
 <!-- SYSTEMS -->
 <section class="section" id="systems" style="padding-top:0">
   <div class="sec-no reveal">02 — How they work</div>
-  <h2 class="reveal">Systems, <em>diagrammed.</em></h2>
-  <p class="sec-sub reveal">Five flagship systems, drawn honestly — real architecture, flowing. No mockups, no staged screenshots; real screen recordings on request.</p>
+  <h2 class="reveal">How it all <em>fits together.</em></h2>
+  <p class="sec-sub reveal">I drew each one out properly — the real architecture, no hand-wavy arrows. Ask for screen recordings and I'll send them.</p>
   <div class="sys-grid">
     <div class="sys reveal">
       <svg viewBox="0 0 360 220" role="img" aria-label="Jarvis voice pipeline diagram">
@@ -288,6 +288,25 @@
     </div>
 
     <div class="sys reveal">
+      <svg viewBox="0 0 360 220" role="img" aria-label="PyChat offline chatbot diagram">
+        <defs><marker id="mpc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#e8b44a"/></marker></defs>
+        <rect class="hot" x="14" y="16" width="98" height="40" rx="8"/><text class="t mid" x="63" y="33">you type</text><text class="c mid" x="63" y="47">chat, in any language</text>
+        <rect class="box" x="131" y="16" width="98" height="40" rx="8"/><text class="t mid" x="180" y="33">Flask UI</text><text class="c mid" x="180" y="47">chat + history</text>
+        <rect class="box" x="248" y="16" width="98" height="40" rx="8"/><text class="t mid" x="297" y="33">intent router</text><text class="c mid" x="297" y="47">deterministic first</text>
+        <line class="flow" x1="114" y1="36" x2="127" y2="36" marker-end="url(#mpc)"/><line class="flow" x1="231" y1="36" x2="244" y2="36" marker-end="url(#mpc)"/>
+        <polyline class="flow" points="297,56 297,68 100,68 100,76" fill="none" marker-end="url(#mpc)"/>
+        <polyline class="flow" points="310,56 310,68 267,68 267,76" fill="none" marker-end="url(#mpc)"/>
+        <rect class="box" x="14" y="80" width="158" height="48" rx="8"/><text class="t" x="28" y="100">memory</text><text class="c" x="28" y="115">your disk · your business</text>
+        <rect class="fill" x="188" y="80" width="158" height="48" rx="8"/><text class="th" x="202" y="100">neural nets</text><text class="c" x="202" y="115">sklearn · trains on you</text>
+        <line class="flow" x1="180" y1="128" x2="180" y2="148" marker-end="url(#mpc)"/>
+        <rect class="moss" x="14" y="152" width="332" height="50" rx="8" stroke-dasharray="4 4"/>
+        <text class="tm" x="28" y="171">optional LLM — only if it's above the router's pay grade</text><text class="c" x="28" y="187">14 modules · offline by default · live on render</text>
+        <circle class="dot" cx="330" cy="30" r="3"/>
+      </svg>
+      <div class="sys-body"><h4>PyChat <span class="sys-no">04</span></h4><p>The chatbot's brain: route it yourself when you can, remember everything locally, and only call the big model when you're stuck.</p><span class="mono">Python · Flask · neural nets · LLM hybrid</span></div>
+    </div>
+
+    <div class="sys reveal">
       <svg viewBox="0 0 360 220" role="img" aria-label="Parlons learning loop diagram">
         <defs><marker id="ml" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#e8b44a"/></marker></defs>
         <rect class="hot" x="14" y="16" width="158" height="44" rx="8"/><text class="th" x="28" y="35">65 lessons</text><text class="c" x="28" y="50">EN → SW → Sheng bridge</text>
@@ -303,7 +322,7 @@
         <text class="tm" x="14" y="214">loop: learn → practice → forget → repeat, offline</text>
         <circle class="dot" cx="330" cy="30" r="3"/>
       </svg>
-      <div class="sys-body"><h4>Parlons <span class="sys-no">04</span></h4><p>A closed learning loop: lessons, exercises, spaced repetition and a chat partner — all offline, all on-device.</p><span class="mono">Kotlin · Compose · Vosk · Leitner SRS</span></div>
+      <div class="sys-body"><h4>Parlons <span class="sys-no">05</span></h4><p>A closed learning loop: lessons, exercises, spaced repetition and a chat partner — all offline, all on-device.</p><span class="mono">Kotlin · Compose · Vosk · Leitner SRS</span></div>
     </div>
 
     <div class="sys reveal">
@@ -320,7 +339,7 @@
         <text class="tm" x="14" y="214">v16 · runs my life daily</text>
         <circle class="dot" cx="330" cy="30" r="3"/>
       </svg>
-      <div class="sys-body"><h4>Calendar Rescheduler <span class="sys-no">05</span></h4><p>Push → freebusy scan → move with reason → undo. Overfill swaps cancellations for queued priorities.</p><span class="mono">Apps Script · Calendar API v3 · PWA + APK</span></div>
+      <div class="sys-body"><h4>Calendar Rescheduler <span class="sys-no">06</span></h4><p>Push → freebusy scan → move with reason → undo. Overfill swaps cancellations for queued priorities.</p><span class="mono">Apps Script · Calendar API v3 · PWA + APK</span></div>
     </div>
   </div>
 </section>
@@ -328,8 +347,8 @@
 <!-- LAB -->
 <section class="section" id="lab" style="padding-top:0">
   <div class="sec-no reveal">03 — The lab</div>
-  <h2 class="reveal">Try the <em>machinery.</em></h2>
-  <p class="sec-sub reveal">Five working slices of the five flagship systems, running entirely in your browser — paste, push, parse, and talk to them.</p>
+  <h2 class="reveal">Go on, poke <em>around.</em></h2>
+  <p class="sec-sub reveal">Five pieces of the real apps, running right here in your browser. Break them if you can.</p>
   <div class="lab-grid">
     <div class="lab reveal">
       <h4>M-PESA classifier <span class="lab-no">M/01</span></h4>
@@ -408,8 +427,8 @@
 <section class="section split" id="about" style="padding-top:0">
   <div class="reveal">
     <div class="sec-no">04 — About</div>
-    <h2>Nairobi-bred.<br><em>Systems-brained.</em></h2>
-    <p class="big-p"><strong>Mweshimiwa Enterprises</strong> is a one-person studio for software that respects people: calm scheduling, honest finance intelligence, offline-first mobile. I ship daily drivers — the calendar app runs my own life; the finance engine has read thousands of Kenyan money messages.</p>
+    <h2>Just me, in Nairobi,<br><em>building things.</em></h2>
+    <p class="big-p"><strong>Mweshimiwa Enterprises</strong> is a one-person studio. I build the software I wish existed: a calendar that keeps me honest, finance tools that get what campus money actually feels like, apps that work with zero bars. I use everything I ship — the calendar literally runs my day.</p>
     <ul class="principles">
       <li><span class="n">i.</span><div><b>Calm over clever</b><span>Protected blocks, quiet hours, undo everywhere. Software should lower the heart rate.</span></div></li>
       <li><span class="n">ii.</span><div><b>Offline is a feature</b><span>Jarvis and the ONNX M-PESA model run with zero bars.</span></div></li>
@@ -434,7 +453,7 @@
 <!-- STACK -->
 <section class="section" id="stack" style="padding-top:0">
   <div class="sec-no reveal">05 — Stack &amp; proof</div>
-  <h2 class="reveal">Brutal where it counts, <em>beautiful</em> where it shows.</h2>
+  <h2 class="reveal">The tools I <em>reach for.</em></h2>
   <div class="stack-grid" style="margin-top:36px">
     <div class="s reveal"><h4>AI / ML</h4><p>Python · PyTorch · ONNX · noise-augmented training · eval gauntlets</p></div>
     <div class="s reveal"><h4>Mobile</h4><p>Kotlin · Compose · Room · WorkManager · WebView bridges</p></div>
@@ -452,7 +471,7 @@
 <!-- GITHUB -->
 <section class="section" id="github" style="padding-top:0">
   <div class="sec-no reveal">06 — Live from GitHub</div>
-  <h2 class="reveal">Fresh off <em>the forge.</em> <a style="color:var(--accent-ink);border-bottom:1px solid var(--accent)" href="https://github.com/mega7306626007" target="_blank" rel="noopener" data-hover>@mega7306626007</a></h2>
+  <h2 class="reveal">What I've been <em>pushing lately.</em> <a style="color:var(--accent-ink);border-bottom:1px solid var(--accent)" href="https://github.com/mega7306626007" target="_blank" rel="noopener" data-hover>@mega7306626007</a></h2>
   <div class="mono dim reveal" id="ghStatus" style="font-size:11px;margin-bottom:20px">fetching repos…</div>
   <div class="gh-grid" id="ghGrid"></div>
 </section>
@@ -461,7 +480,7 @@
 <section class="section contact" id="contact" style="padding-top:0">
   <div class="sec-no reveal">07 — Contact</div>
   <h2 class="mega reveal">Have something<br><em>worth building?</em></h2>
-  <p class="lede reveal" style="margin-top:20px">Email <b>lemuelmwesh@gmail.com</b> with scope, timeline, and budget. Reply within 48 hours.</p>
+  <p class="lede reveal" style="margin-top:20px">Mail me at <b>lemuelmwesh@gmail.com</b> — tell me what you want built, roughly when, and what you're working with. I answer within 48 hours.</p>
   <div class="contact-row reveal">
     <a class="btn primary" href="mailto:lemuelmwesh@gmail.com" data-hover>lemuelmwesh@gmail.com</a>
     <button class="btn ghost" id="copyEmail" data-hover>Copy email</button>

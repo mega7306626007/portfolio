@@ -31,7 +31,7 @@ if (cursor && matchMedia("(hover: hover) and (pointer: fine)").matches) {
     el.addEventListener("mouseenter", () => cursor.classList.add("big"));
     el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
   });
-  (function follow() { cx += (mx - cx) * .2; cy += (my - cy) * .2;
+  (function follow() { cx += (mx - cx) * .55; cy += (my - cy) * .55;
     cursor.style.left = cx.toFixed(1) + "px"; cursor.style.top = cy.toFixed(1) + "px";
     requestAnimationFrame(follow); })();
 }
@@ -379,7 +379,7 @@ const HIDE = new Set(["portfolio", "mega7306626007", "automatic-spoon", "New-fol
 const LANG = { Python: "#3572A5", Kotlin: "#A97BFF", JavaScript: "#f1e05a", HTML: "#e34c26", CSS: "#563d7c", Shell: "#89e051", Dart: "#00B4AB", Ruby: "#701516", PHP: "#4F5D95" };
 fetch(SITE.api).then(r => r.json()).then(all => {
   const repos = all.filter(r => !HIDE.has(r.name)).slice(0, 6);
-  $("ghStatus").textContent = `${repos.length} freshest repositories · live`;
+  $("ghStatus").textContent = `${repos.length} repos, freshest first · live`;
   $("liveStars").textContent = `${all.filter(r => !HIDE.has(r.name)).length} public repos`;
   $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
