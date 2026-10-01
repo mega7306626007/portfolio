@@ -1,4 +1,4 @@
-const SITE = { email: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=6" };
+const SITE = { email: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
 const $ = id => document.getElementById(id);
 
 addEventListener("load", () => setTimeout(() => $("loader").classList.add("done"), 600));
@@ -113,15 +113,26 @@ function classifySMS(s) { s = s.toLowerCase(); const c = [
   ["SEND", /sent to|send.*ksh|transfer/], ["RECEIVE", /received|received from/]];
   for (const [k, r] of c) if (r.test(s)) return k;
   return s.includes("safaricom") || s.includes("m-pesa") || s.includes("mpsa") ? "SEND" : "UNKNOWN"; }
+const HIST = [];
+function renderHist() { $("histLog").innerHTML = HIST.length ? HIST.map(h => `<div><b>${h.label}</b> — ${h.conf}% <span style="opacity:.55">· ${h.when}</span></div>`).join("") : `<span style="opacity:.55">no tests yet — run one above</span>`; }
+renderHist();
 $("classifyBtn").addEventListener("click", () => {
   const v = $("smsIn").value;
   $("predLabel").textContent = "reading…"; $("confFill").style.width = "10%";
   setTimeout(() => { const noisy = /poa|plz|latr|\.\.\.|mpsa/.test(v.toLowerCase());
     const label = classifySMS(v); const conf = label === "UNKNOWN" ? 41 : noisy ? 97 + Math.random() * 3 : 99 + Math.random();
+    const rows = [
+      { n: label + " · neural", c: conf },
+      { n: "regex fallback", c: label === "UNKNOWN" ? 30 : 74 },
+      { n: "runner-up", c: Math.max(5, conf - 8 - Math.random() * 4) },
+    ].sort((a, b) => b.c - a.c);
     $("predLabel").textContent = label; $("predConf").textContent = conf.toFixed(1) + "%";
     $("confFill").style.width = conf + "%";
-    $("predTop").innerHTML = `1 · ${label} — ${conf.toFixed(1)}%<br>2 · regex fallback — ${(label === "UNKNOWN" ? 30 : 74).toFixed(0)}%<br>3 · runner-up — ${(conf - 8).toFixed(1)}%`;
+    $("predTop").innerHTML = rows.map((r, i) => `${i + 1} · ${r.n} — ${r.c.toFixed(1)}%`).join("<br>");
     $("predMeta").textContent = noisy ? "noisy input (sheng/typos) — regex would fail, the network holds" : "clean parse · regex 0% fail · network confirms";
+    HIST.unshift({ label, conf: conf.toFixed(1), when: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) });
+    if (HIST.length > 5) HIST.pop();
+    renderHist();
     confetti(innerWidth / 2, 260, 8); }, 800); });
 
 // Lab: scheduler push
@@ -130,19 +141,64 @@ function renderDay(busyCount, pickIdx, need) { const d = $("daySim"); d.innerHTM
     s.textContent = i === pickIdx ? need + "m" : (i < busyCount ? "busy" : "free"); d.appendChild(s); } }
 $("pushRange").addEventListener("input", e => $("pushMin").textContent = e.target.value);
 $("chaosRange").addEventListener("input", e => $("chaosVal").textContent = ["low", "medium", "packed"][e.target.value - 1]);
+function renderWeek(hit) { const d = $("weekStrip"); if (!d) return; d.innerHTML = "";
+  const now = new Date();
+  for (let i = 0; i < 7; i++) { const t = new Date(now.getTime() + i * 86400000);
+    const c = document.createElement("div"); c.className = "wday" + (i === hit ? " hit" : "");
+    const lbl = i === 0 ? "today" : i === 1 ? "tmrw" : t.toLocaleDateString([], { weekday: "short" });
+    c.innerHTML = `${lbl}<small>${t.getDate()}</small>`; d.appendChild(c); } }
 $("pushBtn").addEventListener("click", () => { const need = +$("pushRange").value, chaos = +$("chaosRange").value;
-  const busy = chaos === 1 ? 6 : chaos === 2 ? 13 : 19; renderDay(busy, -1, need); $("pushOut").textContent = "scanning freebusy 8:00–22:45…";
+  const busy = chaos === 1 ? 6 : chaos === 2 ? 13 : 19; renderDay(busy, -1, need); renderWeek(-1); $("pushOut").textContent = "scanning freebusy 8:00–22:45…";
   let i = busy; const step = setInterval(() => { renderDay(busy, i, need); i++;
     if (i > busy + 2) { clearInterval(step); const ok = busy + need / 15 < 25;
+      renderWeek(ok ? 0 : 1);
       $("pushOut").textContent = ok ? `moved ${need}m → first fitting slot after ${busy} busy blocks · undo open 6h` : "no room today — rolled to tomorrow 8:00";
       confetti(innerWidth / 2, 320, 6); } }, 200); });
-renderDay(13, -1, 60);
+renderDay(13, -1, 60); renderWeek(-1);
 
 // Live GitHub
-fetch(SITE.api).then(r => r.json()).then(repos => {
-  $("ghStatus").textContent = `${repos.length} freshest repositories`;
-  $("liveStars").textContent = `★ ${repos.reduce((a, r) => a + (r.stargazers_count || 0), 0)} stars`;
-  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${(r.description || "No description — code speaks.").slice(0, 100)}</p><div class="gh-meta"><span>★ ${r.stargazers_count || 0}</span><span>${r.language || "mixed"}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
-  document.querySelectorAll("#ghGrid .gh-card").forEach((el, i) => setTimeout(() => el.classList.add("in"), i * 80));
+const HIDE = new Set(["portfolio", "mega7306626007", "automatic-spoon", "New-folder--4-", "global-digest2", "global-digest-mvp"]);
+fetch(SITE.api).then(r => r.json()).then(all => {
+  const repos = all.filter(r => !HIDE.has(r.name)).slice(0, 6);
+  $("ghStatus").textContent = `${repos.length} freshest repositories · live`;
+  $("liveStars").textContent = `${all.filter(r => !HIDE.has(r.name)).length} public repos`;
+  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
-  $("ghGrid").innerHTML = `<div class="gh-card"><h3>sms-engine</h3><p>M-PESA parser + 4.3M-param NN + ONNX.</p><a href="${SITE.github}" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>calendar-rescheduler</h3><p>Push · overfill · undo scheduling OS.</p><a href="${SITE.github}" target="_blank" rel="noopener">Open GitHub →</a></div>`; });
+  $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`; });
+
+// Lab: Jarvis intent router (mirrors the on-device CommandRouter)
+const JJOKES = ["Why do programmers prefer dark mode? Because light attracts bugs.", "Niko na PhD kwa kuchelewa — lakini leo nimefika mapema.", "Pourquoi les plongeurs plongent-ils toujours en arrière ? Parce que sinon, ils tombent dans le bateau."];
+function jadd(who, html) { const c = $("jchat"); if (!c) return;
+  const d = document.createElement("div"); d.className = "jm " + who;
+  d.innerHTML = `<span class="who">${who === "bot" ? "JARVIS" : "YOU"}</span>${html}`;
+  c.appendChild(d); c.scrollTop = c.scrollHeight; }
+function jarvisReply(q) {
+  const s = q.toLowerCase().trim();
+  if (/^(hi|hello|hey|habari|hujambo|niaje|sasa|salut|bonjour)\b/.test(s) || /(how are you|uko poa|vipi|ça va)/.test(s))
+    return s.match(/salut|bonjour|ça va/) ? "Salut ! Je vais bien, merci. Et toi ? <b>Try:</b> tell me a joke" : s.match(/habari|hujambo|uko|vipi|poa|niaje|sasa/) ? "Niko vizuri, asante kwa kuuliza! Vipi wewe? <b>Jaribu:</b> tell me a joke" : "Hello! Good to see you. <b>Try:</b> what is the time?";
+  if (/(time|sa(a)?\b|saa|heure|wakati)/.test(s)) {
+    const t = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Nairobi" }).format(new Date());
+    return `It's <b>${t} EAT</b> — Nairobi time. Anything else?`;
+  }
+  if (/(joke|chekesha|blague|cheka)/.test(s)) return JJOKES[Math.floor(Math.random() * JJOKES.length)];
+  const calc = s.match(/(?:calcul(?:ate)?|hesabu|ni)\s*([\d\s+\-*/().%^]+)/) || ( /^[\d\s+\-*/().%^]+$/.test(s) ? [s, s] : null );
+  if (calc) { try { const expr = calc[1].replace(/\^/g, "**");
+      if (!/^[\d\s+\-*/().%*]+$/.test(expr) || !/\d/.test(expr)) throw 0;
+      const v = Function('"use strict";return(' + expr + ")")();
+      if (typeof v !== "number" || !isFinite(v)) throw 0;
+      return `That's <b>${Math.round(v * 100) / 100}</b>. The calculator command approves.`; } catch { return "Couldn't parse that sum — try <b>calculate 18*24+7</b>."; } }
+  if (/(timer|kipima|minut)/.test(s)) { const m = s.match(/(\d+)\s*(hour|hr|minute|min|sec)/);
+    return m ? `Timer set for <b>${m[1]} ${m[2]}</b>. I'll keep time — Room database has it logged.` : "How long? Try <b>set a timer for 10 minutes</b>."; }
+  if (/(thank|asante|merci)/.test(s)) return "Karibu sana — always a pleasure.";
+  if (/(bye|kwa heri|au revoir)/.test(s)) return "Kwa heri! I'll be here — offline, on-device.";
+  return "Hmm — my router caught <b>no intent</b>. Try: a greeting in any language, <b>time</b>, <b>joke</b>, <b>calculate 12*8</b>, or a <b>timer</b>.";
+}
+const jform = $("jform");
+if (jform) {
+  jadd("bot", "Hey — I'm a slice of <b>Jarvis</b>, the Mwesh assistant. Talk to me in English, Kiswahili, Sheng, or French.");
+  document.querySelectorAll("[data-j]").forEach(b => b.addEventListener("click", () => { $("jin").value = b.dataset.j; jform.requestSubmit(); }));
+  jform.addEventListener("submit", e => { e.preventDefault();
+    const v = $("jin").value.trim(); if (!v) return; $("jin").value = "";
+    jadd("usr", v.replace(/</g, "&lt;"));
+    setTimeout(() => jadd("bot", jarvisReply(v)), 450); });
+}

@@ -110,20 +110,34 @@
     </div>
   </div>
   <div id="projectGrid">
-    <article class="proj reveal" data-tags="ai web mobile" data-hover data-title="Calendar Rescheduler" data-body="Apps Script + Calendar API v3 + Android WebView wrapper. Push-to-next-free-slot, class-cancelled overfill queue, 6h undo stack, freebusy-aware search 8:00–22:45, protected-block guardrails. Day/Week/Month views, installable PWA + native APK. Runs my own life daily — v16 shipped.">
+    <article class="proj reveal" data-tags="ai mobile" data-hover data-title="Jarvis (Mwesh) — Voice Assistant" data-body="Android voice assistant (Kotlin + Compose). On-device ONNX inference, Room memory (alarms, notes, reminders, conversations), command router (time, calculator, jokes, timers), speech recognition + TTS, translator, EN/SW/FR corpus. 80+ source files, 100+ tests. Training corpus (863MB, multilingual) kept local.">
       <span class="proj-num">01</span>
       <div>
-        <h3>Calendar Rescheduler</h3>
-        <p>An anti-procrastination operating system on top of Google Calendar. Push tasks to the next free slot, overfill cancellations from a priority queue, undo anything within six hours. Protected blocks are never touched.</p>
-        <div class="proj-tags"><span>Apps Script</span><span>Calendar API v3</span><span>Kotlin WebView</span><span>PWA + APK</span></div>
+        <h3>Jarvis <em>· Mwesh</em></h3>
+        <p>A voice assistant that lives on the device: on-device ONNX inference, Room-backed memory, a command router for time, calculator, jokes and timers — speaking English, Kiswahili, and French.</p>
+        <div class="proj-tags"><span>Kotlin</span><span>Compose</span><span>ONNX</span><span>Room</span><span>EN/SW/FR</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/mwesh" target="_blank" rel="noopener" data-hover>Repo →</a></div>
       </div>
       <div class="proj-side">
-        <div class="proj-metric">6h<small>undo window</small></div>
+        <div class="proj-metric">On-device<small>onnx inference</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
+    </article>
+    <article class="proj reveal" data-tags="ai mobile" data-hover data-title="PesaFlow — Student Finance" data-body="KES-only student finance app (134+ Kotlin files, verified debug build). 7 transaction sources: manual entry, M-Pesa SMS parser (10+ formats), natural-language parser (Kenyan English/Swahili/Sheng), share-to-app, on-device OCR receipts, CSV import with dedupe. Budgets, debt-payoff planner, investment simulator, analytics.">
+      <span class="proj-num">02</span>
+      <div>
+        <h3>PesaFlow</h3>
+        <p>Student finance with adaptive intelligence: M-Pesa SMS parsing, Sheng-aware natural language input, OCR receipts, budgets and a debt-payoff planner. KES only, offline-first, local AI.</p>
+        <div class="proj-tags"><span>Kotlin</span><span>Compose</span><span>M-Pesa parser</span><span>OCR</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/PesaFlow" target="_blank" rel="noopener" data-hover>Repo →</a></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">7<small>input sources</small></div>
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
     <article class="proj reveal" data-tags="ai" data-hover data-title="SMS Engine · M-PESA Neural" data-body="Python engine over 5,000+ SMS across 29 M-PESA product types (Fuliza, M-Shwari, KCB, Okoa, Pochi, Ziidi, Hustler, Lipa Mdogo). Regex parser at 0% fail rate, pattern/probability layer, finance intelligence (income vs credit gap, runway, Okoa-dependence), and a 4.31M-parameter neural classifier (100k msgs, 35% noise-augmented), macro-F1 1.0, 100% on the noisy gauntlet vs 74% regex. Exported to ONNX for on-device Android.">
-      <span class="proj-num">02</span>
+      <span class="proj-num">03</span>
       <div>
         <h3>SMS Engine <em>· M-PESA Neural</em></h3>
         <p>Parses every Kenyan money SMS — then a neural network reads through typos, Sheng, and truncation where regex dies. Finance layer on top: income vs credit, runway, Okoa-dependence detection.</p>
@@ -134,51 +148,68 @@
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
-    <article class="proj reveal" data-tags="mobile" data-hover data-title="Four Threads — Habit OS" data-body="Kotlin + Jetpack Compose + Room + WorkManager. Offline-only: no accounts, no ads, no analytics. Scheduled-day-aware streaks, Weave canvas (interlace + freeze hatch), local rotating reminders with quiet hours, JSON backup, poem editor + code log.">
-      <span class="proj-num">03</span>
-      <div>
-        <h3>Four Threads</h3>
-        <p>An offline habit-weaving app. Four strands — body, mind, craft, soul — braided into a living Weave canvas. No cloud, no trackers, no noise.</p>
-        <div class="proj-tags"><span>Kotlin</span><span>Compose</span><span>Room</span><span>100% offline</span></div>
-      </div>
-      <div class="proj-side">
-        <div class="proj-metric">0<small>trackers</small></div>
-        <button class="proj-link open-modal" data-hover>Case study →</button>
-      </div>
-    </article>
-    <article class="proj reveal" data-tags="ai web" data-hover data-title="Transcriber" data-body="Audio → structured notes pipeline. Chunked transcription, speaker diarization hooks, summarization queue, markdown export. Built to feed the poetry and knowledge systems — lectures, sermons, interviews.">
+    <article class="proj reveal" data-tags="ai web mobile" data-hover data-title="Calendar Rescheduler" data-body="Apps Script + Calendar API v3 + Android WebView wrapper. Push-to-next-free-slot, class-cancelled overfill queue, 6h undo stack, freebusy-aware search 8:00–22:45, protected-block guardrails. Day/Week/Month views, installable PWA + native APK. Runs my own life daily — v16 shipped.">
       <span class="proj-num">04</span>
       <div>
-        <h3>Transcriber</h3>
-        <p>Long audio in, timestamped and searchable knowledge out. Chunked pipeline with summaries and markdown export.</p>
-        <div class="proj-tags"><span>Python</span><span>Whisper-style</span><span>Markdown</span></div>
+        <h3>Calendar Rescheduler</h3>
+        <p>An anti-procrastination operating system on top of Google Calendar. Push tasks to the next free slot, overfill cancellations from a priority queue, undo anything within six hours. Protected blocks are never touched.</p>
+        <div class="proj-tags"><span>Apps Script</span><span>Calendar API v3</span><span>Kotlin WebView</span><span>PWA + APK</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/calendar-rescheduler" target="_blank" rel="noopener" data-hover>Repo →</a></div>
       </div>
       <div class="proj-side">
-        <div class="proj-metric">∞<small>audio length</small></div>
+        <div class="proj-metric">6h<small>undo window</small></div>
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
-    <article class="proj reveal" data-tags="web" data-hover data-title="Poetry OS" data-body="A serif-first home for poems: editor with tags, word and minute counts, reading modes, print-grade detail. Typing practice meets publishing.">
+    <article class="proj reveal" data-tags="ai" data-hover data-title="Transcriber — Kiswahili Voice" data-body="Local audio transcriber with synced player, SRT editor, Kiswahili language support, and a Whisper fine-tuning pipeline. Long audio in, timestamped knowledge out — lectures, sermons, interviews.">
       <span class="proj-num">05</span>
       <div>
-        <h3>Poetry OS</h3>
-        <p>A reading and typing sanctuary for poems. Slow web — serif, generous whitespace, print-grade detail.</p>
-        <div class="proj-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+        <h3>Transcriber</h3>
+        <p>Local audio transcription with a synced player, SRT editor, and Kiswahili support — plus a Whisper fine-tuning pipeline. Long audio in, timestamped knowledge out.</p>
+        <div class="proj-tags"><span>Python</span><span>Whisper</span><span>Kiswahili</span><span>SRT</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/transcriber" target="_blank" rel="noopener" data-hover>Repo →</a></div>
       </div>
       <div class="proj-side">
-        <div class="proj-metric">Aa<small>serif first</small></div>
+        <div class="proj-metric">SW<small>kiswahili ready</small></div>
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
-    <article class="proj reveal" data-tags="ai web" data-hover data-title="Chatbot Modules" data-body="Modular chatbot kit: intents, memory, tool calls, queue-driven tasks. Powers the 'Chatbot dev' block in the rescheduler queue; reused across experiments and client work.">
+    <article class="proj reveal" data-tags="ai web" data-hover data-title="chatbot-web — Offline Multilingual Chat" data-body="Flask web UI for an offline multilingual chatbot — chat, memory, LLM-hybrid ready. Backed by the chatbot_modules engine (intents, memory, neural nets, optional LLM hybrid). Live demo on Vercel.">
       <span class="proj-num">06</span>
       <div>
-        <h3>Chatbot Modules</h3>
-        <p>Composable conversational bricks — parsing, state, tools — reused across experiments and client work.</p>
-        <div class="proj-tags"><span>Python</span><span>JS</span><span>Tool calls</span></div>
+        <h3>chatbot-web</h3>
+        <p>Flask web UI for an offline multilingual chatbot — conversation, memory, LLM-hybrid ready. Try it live, no install.</p>
+        <div class="proj-tags"><span>Python</span><span>Flask</span><span>Offline</span><span>Multilingual</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/chatbot-web" target="_blank" rel="noopener" data-hover>Repo →</a><a href="https://chatbot-web-flame.vercel.app" target="_blank" rel="noopener" data-hover>Live ↗</a></div>
       </div>
       <div class="proj-side">
-        <div class="proj-metric">⊕<small>composable</small></div>
+        <div class="proj-metric">Live<small>vercel demo</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
+    </article>
+    <article class="proj reveal" data-tags="web" data-hover data-title="The Heart v2 — Poetry Experience" data-body="The Heart v2 — Mwesh poetry web experience with voice prompts (JS + Python). Static sibling the-heart-4 runs in-browser neural continuation. Live on Vercel.">
+      <span class="proj-num">07</span>
+      <div>
+        <h3>The Heart <em>v2</em></h3>
+        <p>Mwesh poetry as a web experience — voice prompts, JS + Python. Live now; a static sibling runs neural continuation entirely in-browser.</p>
+        <div class="proj-tags"><span>JavaScript</span><span>Python</span><span>Voice</span><span>Poetry</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/the-heart-2" target="_blank" rel="noopener" data-hover>Repo →</a><a href="https://the-heart-2.vercel.app" target="_blank" rel="noopener" data-hover>Live ↗</a></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">Live<small>vercel demo</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
+    </article>
+    <article class="proj reveal" data-tags="mobile" data-hover data-title="Parlons — French for Kenyans" data-body="Offline-first French for Kenyans (EN/SW/Sheng). 65 lessons, Simba chat partner, spaced repetition, Vosk offline speech models, novels and poems in French, zero accounts, zero API keys.">
+      <span class="proj-num">08</span>
+      <div>
+        <h3>Parlons</h3>
+        <p>Offline-first French for Kenyans, taught in English, Kiswahili and Sheng. 65 lessons, Simba chat partner, spaced repetition, on-device speech — zero accounts, zero API keys.</p>
+        <div class="proj-tags"><span>Kotlin</span><span>Compose</span><span>Vosk offline</span><span>SRS</span></div>
+        <div class="row-links"><a href="https://github.com/mega7306626007/Parlons" target="_blank" rel="noopener" data-hover>Repo →</a></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">65<small>lessons</small></div>
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
@@ -233,7 +264,7 @@
   <div class="lab-grid">
     <div class="lab reveal">
       <h4>M-PESA classifier</h4>
-      <p>Same decision logic as the on-device model. Paste a money SMS, or try a sample.</p>
+      <p>Same decision logic as the on-device model — now with ranked top-3 and a test history. Paste a money SMS, or try a sample.</p>
       <label for="smsIn">Input SMS</label>
       <textarea id="smsIn" rows="4">QHX7K2LMNO Confirmed. Ksh2,450.00 sent to JOHN DOE 0722123456 on 12/9/26 at 9:41 AM. New M-PESA balance is Ksh12,300.50. Transaction cost, Ksh28.00.</textarea>
       <div class="samples">
@@ -251,19 +282,39 @@
         <div id="predTop" class="mono"></div>
         <div class="mono dim" id="predMeta" style="font-size:10px">regex fallback 74% · NN 100% under noise</div>
       </div>
+      <div class="hist">
+        <div class="mono dim" style="font-size:10px;letter-spacing:.1em">TEST HISTORY</div>
+        <div id="histLog" class="mono"></div>
+      </div>
     </div>
     <div class="lab reveal">
       <h4>Scheduler push</h4>
-      <p>The rescheduler's core loop: scan the day's free/busy grid, take the next fitting slot.</p>
+      <p>The rescheduler's core loop: scan the day's free/busy grid, take the next fitting slot — or roll to the next open day.</p>
       <label>Task length · <b id="pushMin">60</b> min</label>
       <input type="range" id="pushRange" min="15" max="180" step="15" value="60">
       <label>Day busyness · <b id="chaosVal">medium</b></label>
       <input type="range" id="chaosRange" min="1" max="3" step="1" value="2">
       <button class="btn primary" id="pushBtn" data-hover>Find free slot</button>
+      <div class="week-strip" id="weekStrip"></div>
       <div class="day-sim" id="daySim"></div>
       <div id="pushOut"></div>
     </div>
+    <div class="lab span2 reveal">
+      <h4>Jarvis — intent router</h4>
+      <p>A working slice of the Mwesh assistant: type like you talk — English, Kiswahili, or French. Same routing idea as the on-device CommandRouter.</p>
+      <div class="jchips">
+        <button data-j="hello, how are you?" data-hover>greeting</button>
+        <button data-j="uko poa?" data-hover>kiswahili</button>
+        <button data-j="what is the time?" data-hover>time</button>
+        <button data-j="tell me a joke" data-hover>joke</button>
+        <button data-j="calculate 18*24+7" data-hover>calculate</button>
+        <button data-j="set a timer for 10 minutes" data-hover>timer</button>
+      </div>
+      <div class="jchat" id="jchat"></div>
+      <form class="jform" id="jform"><input id="jin" autocomplete="off" placeholder="Talk to Jarvis… (try Sheng, Swahili, French)" aria-label="Jarvis input"><button class="btn primary" type="submit" data-hover>Send</button></form>
+    </div>
   </div>
+
 </section>
 
 <!-- ABOUT -->
