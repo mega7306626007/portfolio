@@ -1,5 +1,6 @@
 const SITE = { email: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
 const $ = id => document.getElementById(id);
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 addEventListener("load", () => setTimeout(() => $("loader").classList.add("done"), 600));
 setTimeout(() => $("loader").classList.add("done"), 2400);
@@ -7,15 +8,16 @@ setTimeout(() => $("loader").classList.add("done"), 2400);
 function tick() { try { $("nairobiTime").textContent = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Nairobi" }).format(new Date()); } catch {} }
 tick(); setInterval(tick, 20000);
 
-const roles = ["training neural nets on M-PESA", "pushing calendar tasks", "weaving habits offline", "answering email in 48h", "shipping for Mweshimiwa"];
+const roles = ["training neural nets on M-PESA", "pushing calendar tasks", "routing voice intents offline", "answering email in 48h", "shipping for Mweshimiwa"];
 let ri = 0, ci = 0, del = false;
-(function type() { const w = roles[ri]; $("typer").textContent = w.slice(0, ci);
+if (REDUCED) $("typer").textContent = roles[0];
+else (function type() { const w = roles[ri]; $("typer").textContent = w.slice(0, ci);
   if (!del && ci < w.length) ci++; else if (!del) { del = true; return setTimeout(type, 1600); }
   else if (ci > 0) ci--; else { del = false; ri = (ri + 1) % roles.length; }
   setTimeout(type, del ? 24 : 50); })();
 
 const COLORS = ["#9a3f16", "#3f5a3a", "#e8b44a", "#1c1811"];
-function confetti(x, y, n = 8) { for (let i = 0; i < n; i++) { const s = document.createElement("div"); s.className = "confetti";
+function confetti(x, y, n = 8) { if (REDUCED) return; for (let i = 0; i < n; i++) { const s = document.createElement("div"); s.className = "confetti";
   s.style.left = x + "px"; s.style.top = y + "px"; s.style.background = COLORS[i % COLORS.length];
   s.style.setProperty("--dx", (Math.random() * 180 - 90) + "px"); s.style.setProperty("--dy", (-(40 + Math.random() * 180)) + "px");
   s.style.setProperty("--rot", (Math.random() * 540 - 270) + "deg"); document.body.appendChild(s); setTimeout(() => s.remove(), 1000); } }
@@ -30,6 +32,17 @@ document.querySelectorAll(".tilt").forEach(card => { card.addEventListener("mous
 
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); }), { threshold: .1 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+document.querySelectorAll(".reveal").forEach(el => {
+  const sibs = [...el.parentElement.children].filter(c => c.classList && c.classList.contains("reveal"));
+  const i = Math.min(sibs.indexOf(el), 6);
+  if (i > 0) el.style.transitionDelay = (i * 70) + "ms";
+});
+
+const navIo = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  document.querySelectorAll(".nav-links a, .mobile-menu a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+}), { rootMargin: "-40% 0px -55% 0px" });
+document.querySelectorAll("section[id]").forEach(s => navIo.observe(s));
 
 addEventListener("scroll", () => { const h = document.documentElement; const p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
   $("progress").style.width = p + "%"; $("toTop").classList.toggle("show", h.scrollTop > 700); }, { passive: true });
@@ -43,9 +56,10 @@ document.querySelectorAll("[data-count]").forEach(b => cio.observe(b));
 const cv = $("particles"), ctx = cv.getContext("2d"); let pts = [];
 function rs() { cv.width = innerWidth; cv.height = innerHeight; } rs(); addEventListener("resize", rs);
 for (let i = 0; i < 40; i++) pts.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, vx: (Math.random() - .5) * .2, vy: (Math.random() - .5) * .2, r: Math.random() * 1.1 + .3 });
-(function loop() { ctx.clearRect(0, 0, cv.width, cv.height); ctx.fillStyle = "rgba(154,63,22,.28)";
+(function loop() { requestAnimationFrame(loop); if (REDUCED || document.hidden) return;
+  ctx.clearRect(0, 0, cv.width, cv.height); ctx.fillStyle = "rgba(154,63,22,.28)";
   pts.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > cv.width) p.vx *= -1; if (p.y < 0 || p.y > cv.height) p.vy *= -1;
-    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); }); requestAnimationFrame(loop); })();
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); }); })();
 
 document.querySelectorAll(".f").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll(".f").forEach(b => b.classList.remove("active")); btn.classList.add("active");
@@ -185,7 +199,7 @@ $("termForm").addEventListener("submit", e => { e.preventDefault(); const raw = 
   if (c === "help") print(raw, "help · whoami · projects · hire · joke · company · github");
   else if (c === "whoami") print(raw, "emmanuel @ mweshimiwa enterprises — nairobi systems builder");
   else if (c === "company") print(raw, "Mweshimiwa Enterprises · AI · Android · Web · reply <48h · " + SITE.email);
-  else if (c === "projects") print(raw, "calendar-rescheduler / sms-engine / four-threads / poetry-os — see work");
+  else if (c === "projects") print(raw, "jarvis/ pesaflow/ parlons/ transcriber/ pychat/ the-heart — see work");
   else if (c === "hire") { print(raw, "opening email — let's scope it"); location.hash = "#contact"; }
   else if (c === "github") { print(raw, "opening github"); open(SITE.github, "_blank"); }
   else if (c === "joke") print(raw, JOKES[Math.floor(Math.random() * JOKES.length)]);
