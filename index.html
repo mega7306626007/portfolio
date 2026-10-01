@@ -4,24 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <base href="https://mega7306626007.github.io/portfolio/">
-<title>Emmanuel · Mweshimiwa Enterprises — Systems Builder</title>
+<title>Emmanuel · Mweshimiwa Enterprises — Software, Nairobi</title>
 <meta name="description" content="Mweshimiwa Enterprises — Emmanuel, Nairobi. AI, fintech, mobile. Calendar Rescheduler, M-PESA Neural Engine, Four Threads.">
 <meta property="og:title" content="Emmanuel · Mweshimiwa Enterprises">
-<meta property="og:description" content="Calm systems that think. AI · fintech · mobile from Nairobi.">
+<meta property="og:description" content="Software that respects the people who use it. AI · fintech · mobile from Nairobi.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a0a0b'/%3E%3Ctext x='32' y='40' font-size='24' text-anchor='middle' fill='%23c8f04a'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231c1811'/%3E%3Ctext x='32' y='42' font-size='26' text-anchor='middle' fill='%23f3efe4' font-style='italic' font-family='Georgia'%3EM%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 <div class="progress" id="progress"></div>
 <canvas id="particles" aria-hidden="true"></canvas>
-<div class="orb orb-a" aria-hidden="true"></div>
-<div class="orb orb-b" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
+<div class="trail-layer" id="trailLayer" aria-hidden="true"></div>
 
 <div id="loader" aria-hidden="true">
   <div class="loader-inner">
@@ -34,19 +33,19 @@
 <header class="nav" id="nav">
   <a class="brand" href="#top" data-hover>
     <span class="brand-mark">M</span>
-    <span class="brand-text">mweshimiwa<span class="dim">.enterprises</span></span>
+    <span class="brand-text">Mweshimiwa <span class="dim">Enterprises</span></span>
   </a>
   <nav class="nav-links">
     <a href="#work" data-hover>Work</a>
-    <a href="#demos" data-hover>Demos</a>
+    <a href="#systems" data-hover>Systems</a>
+    <a href="#lab" data-hover>Lab</a>
     <a href="#about" data-hover>About</a>
-    <a href="#github" data-hover>GitHub</a>
     <a href="#contact" class="nav-cta" data-hover>Contact</a>
   </nav>
   <button class="nav-menu" id="menuBtn" aria-label="Menu">≡</button>
 </header>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#work">Work</a><a href="#demos">Demos</a><a href="#about">About</a><a href="#github">GitHub</a><a href="#contact">Contact</a>
+  <a href="#work">Work</a><a href="#systems">Systems</a><a href="#lab">Lab</a><a href="#about">About</a><a href="#contact">Contact</a>
 </div>
 
 <main id="top">
@@ -54,24 +53,29 @@
   <div class="hero-left">
     <div class="eyebrow reveal"><span class="pulse"></span> Mweshimiwa Enterprises · Nairobi — <span id="nairobiTime">--:--</span> EAT</div>
     <h1 class="display reveal">
-      <span class="line">Calm systems</span>
-      <span class="line outline">that <em>think.</em></span>
+      <span class="line">Software that</span>
+      <span class="line">respects <em>people.</em></span>
     </h1>
-    <p class="lede reveal">I'm <strong>Emmanuel</strong>, building under <strong>Mweshimiwa Enterprises</strong> — AI, fintech, and mobile from Nairobi. My Calendar Rescheduler runs my own life. My M-PESA engine reads thousands of money messages with a 4.3M-parameter neural network. Offline-first. Measured, not vibes.</p>
+    <p class="lede reveal">I'm <strong>Emmanuel</strong> — I build AI, fintech, and mobile systems from Nairobi. A calendar that fights procrastination. A neural network that reads M-PESA messages through typos and Sheng. Habit software that works with zero bars. Everything below runs, not just renders.</p>
     <div class="hero-ctas reveal">
-      <a href="#work" class="btn primary" data-hover>View work</a>
+      <a href="#work" class="btn primary" data-hover>Selected work</a>
       <a href="#contact" class="btn ghost" data-hover>Get in touch</a>
+    </div>
+    <div class="hero-meta reveal">
+      <div><span>Response time</span><b>&lt; 48 hours</b></div>
+      <div><span>Currently</span><b>Open for work</b></div>
+      <div><span>Proof</span><b>0% parse fail · 100% noisy acc</b></div>
     </div>
     <div class="type-row reveal"><span class="dim">~/mweshimiwa&gt;</span> <span id="typer"></span><span class="caret">▌</span></div>
   </div>
   <div class="hero-right reveal">
     <div class="terminal tilt" id="terminalCard">
-      <div class="term-bar"><i></i><i></i><i></i><span>mweshimiwa — zsh</span></div>
+      <div class="term-bar"><i></i><i></i><i></i><span>mweshimiwa — zsh · type `help`</span></div>
       <pre class="term-body" id="termOut"><code><span class="c">$</span> whoami
 <span class="g">emmanuel @ mweshimiwa enterprises</span>
 <span class="c">$</span> ls projects/
 <span class="g">calendar-rescheduler/ sms-engine/ four-threads/</span></code></pre>
-      <form class="term-input" id="termForm"><span class="c">$</span><input id="termIn" autocomplete="off" placeholder="type: help · whoami · hire · joke" aria-label="Terminal input"></form>
+      <form class="term-input" id="termForm"><span class="c">$</span><input id="termIn" autocomplete="off" placeholder="help · whoami · hire · joke · github" aria-label="Terminal input"></form>
       <div class="term-stats">
         <div><b data-count="5000">0</b><span>sms parsed</span></div>
         <div><b data-count="29">0</b><span>mpesa types</span></div>
@@ -79,23 +83,25 @@
       </div>
     </div>
     <div class="hero-badges">
-      <span class="chip">Apps Script</span><span class="chip">PyTorch · ONNX</span><span class="chip">Kotlin · Compose</span><span class="chip" id="liveStars">GitHub</span>
+      <span class="chip">Apps Script · Calendar API</span><span class="chip">PyTorch · ONNX</span><span class="chip">Kotlin · Compose</span><span class="chip" id="liveStars">GitHub</span>
     </div>
   </div>
 </section>
 
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>MWESHIMIWA ENTERPRISES — CALENDAR RESCHEDULER — M-PESA NEURAL ENGINE — FOUR THREADS — NAIROBI —&nbsp;</span>
-    <span>MWESHIMIWA ENTERPRISES — CALENDAR RESCHEDULER — M-PESA NEURAL ENGINE — FOUR THREADS — NAIROBI —&nbsp;</span>
+    <span>CALENDAR RESCHEDULER · M-PESA NEURAL ENGINE · FOUR THREADS · TRANSCRIBER · POETRY OS · NAIROBI ·&nbsp;</span>
+    <span>CALENDAR RESCHEDULER · M-PESA NEURAL ENGINE · FOUR THREADS · TRANSCRIBER · POETRY OS · NAIROBI ·&nbsp;</span>
   </div>
 </div>
 
 <!-- WORK -->
 <section class="section" id="work">
   <div class="sec-head reveal">
-    <div><div class="kicker">01 — Selected Work</div>
-    <h2>Proof, not <em>promises.</em></h2></div>
+    <div>
+      <div class="sec-no">01 — Selected work</div>
+      <h2>Proof, not <em>promises.</em></h2>
+    </div>
     <div class="filters" role="tablist">
       <button class="f active" data-filter="all" data-hover>All</button>
       <button class="f" data-filter="ai" data-hover>AI/ML</button>
@@ -103,136 +109,177 @@
       <button class="f" data-filter="web" data-hover>Web</button>
     </div>
   </div>
-  <div class="grid" id="projectGrid">
-    <article class="card reveal tilt" data-tags="ai web mobile" data-hover data-title="Calendar Rescheduler" data-body="Apps Script + Calendar API v3 + Android WebView wrapper. Push-to-next-free-slot, class-cancelled overfill queue, 6h undo stack, freebusy-aware search 8:00–22:45, protected-block guardrails. Day/Week/Month views, PWA + native APK.">
-      <div class="card-top"><span class="idx">01</span><span class="tag">Flagship · Shipped</span></div>
-      <h3>Calendar Rescheduler</h3>
-      <p>Anti-procrastination OS on Google Calendar. Push tasks to the next free slot, overfill cancellations from a priority queue, undo anything.</p>
-      <div class="metrics"><span><b>3</b> views</span><span><b>Undo</b> 6h</span><span><b>PWA+APK</b></span></div>
-      <div class="stack-row">Apps Script · Calendar API · Kotlin WebView</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+  <div id="projectGrid">
+    <article class="proj reveal" data-tags="ai web mobile" data-hover data-title="Calendar Rescheduler" data-body="Apps Script + Calendar API v3 + Android WebView wrapper. Push-to-next-free-slot, class-cancelled overfill queue, 6h undo stack, freebusy-aware search 8:00–22:45, protected-block guardrails. Day/Week/Month views, installable PWA + native APK. Runs my own life daily — v16 shipped.">
+      <span class="proj-num">01</span>
+      <div>
+        <h3>Calendar Rescheduler</h3>
+        <p>An anti-procrastination operating system on top of Google Calendar. Push tasks to the next free slot, overfill cancellations from a priority queue, undo anything within six hours. Protected blocks are never touched.</p>
+        <div class="proj-tags"><span>Apps Script</span><span>Calendar API v3</span><span>Kotlin WebView</span><span>PWA + APK</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">6h<small>undo window</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
-    <article class="card reveal tilt featured" data-tags="ai" data-hover data-title="SMS Engine · M-PESA Neural" data-body="5,000+ SMS, 29 M-PESA types (Fuliza, M-Shwari, KCB, Okoa, Pochi, Ziidi, Hustler, Lipa Mdogo). Regex 0% fail + 4.31M-param NN (100k msgs, 35% noise), macro-F1 1.0, 100% noisy gauntlet vs 74% regex. ONNX on-device.">
-      <div class="card-top"><span class="idx">02</span><span class="tag accent">AI · Fintech</span></div>
-      <h3>SMS Engine <em>· M-PESA Neural</em></h3>
-      <p>Reads every Kenyan money SMS — through typos and Sheng where regex fails. Neural net holds 100% under noise.</p>
-      <div class="metrics"><span><b>29</b> types</span><span><b>4.3M</b> params</span><span><b>0%</b> fail</span></div>
-      <div class="stack-row">Python · PyTorch · ONNX · Kotlin</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+    <article class="proj reveal" data-tags="ai" data-hover data-title="SMS Engine · M-PESA Neural" data-body="Python engine over 5,000+ SMS across 29 M-PESA product types (Fuliza, M-Shwari, KCB, Okoa, Pochi, Ziidi, Hustler, Lipa Mdogo). Regex parser at 0% fail rate, pattern/probability layer, finance intelligence (income vs credit gap, runway, Okoa-dependence), and a 4.31M-parameter neural classifier (100k msgs, 35% noise-augmented), macro-F1 1.0, 100% on the noisy gauntlet vs 74% regex. Exported to ONNX for on-device Android.">
+      <span class="proj-num">02</span>
+      <div>
+        <h3>SMS Engine <em>· M-PESA Neural</em></h3>
+        <p>Parses every Kenyan money SMS — then a neural network reads through typos, Sheng, and truncation where regex dies. Finance layer on top: income vs credit, runway, Okoa-dependence detection.</p>
+        <div class="proj-tags"><span>Python</span><span>PyTorch</span><span>ONNX on-device</span><span>29 tx types</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">100%<small>noisy accuracy</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
-    <article class="card reveal tilt" data-tags="mobile" data-hover data-title="Four Threads — Habit OS" data-body="Kotlin + Compose + Room + WorkManager. Offline-only, streak-aware, Weave canvas, quiet-hours reminders, JSON backup.">
-      <div class="card-top"><span class="idx">03</span><span class="tag">Mobile · Offline</span></div>
-      <h3>Four Threads</h3>
-      <p>Offline habit-weaving: body, mind, craft, soul braided on canvas. No cloud. No noise.</p>
-      <div class="metrics"><span><b>0</b> trackers</span><span><b>100%</b> offline</span></div>
-      <div class="stack-row">Kotlin · Compose · Room</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+    <article class="proj reveal" data-tags="mobile" data-hover data-title="Four Threads — Habit OS" data-body="Kotlin + Jetpack Compose + Room + WorkManager. Offline-only: no accounts, no ads, no analytics. Scheduled-day-aware streaks, Weave canvas (interlace + freeze hatch), local rotating reminders with quiet hours, JSON backup, poem editor + code log.">
+      <span class="proj-num">03</span>
+      <div>
+        <h3>Four Threads</h3>
+        <p>An offline habit-weaving app. Four strands — body, mind, craft, soul — braided into a living Weave canvas. No cloud, no trackers, no noise.</p>
+        <div class="proj-tags"><span>Kotlin</span><span>Compose</span><span>Room</span><span>100% offline</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">0<small>trackers</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
-    <article class="card reveal tilt" data-tags="ai web" data-hover data-title="Transcriber" data-body="Audio to structured notes: chunking, diarization hooks, summaries, markdown export.">
-      <div class="card-top"><span class="idx">04</span><span class="tag">AI Tool</span></div>
-      <h3>Transcriber</h3>
-      <p>Long audio in, timestamped knowledge out. Built for lectures, sermons, interviews.</p>
-      <div class="metrics"><span><b>Long</b> audio</span><span><b>MD</b> export</span></div>
-      <div class="stack-row">Python · Whisper-style · JS</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+    <article class="proj reveal" data-tags="ai web" data-hover data-title="Transcriber" data-body="Audio → structured notes pipeline. Chunked transcription, speaker diarization hooks, summarization queue, markdown export. Built to feed the poetry and knowledge systems — lectures, sermons, interviews.">
+      <span class="proj-num">04</span>
+      <div>
+        <h3>Transcriber</h3>
+        <p>Long audio in, timestamped and searchable knowledge out. Chunked pipeline with summaries and markdown export.</p>
+        <div class="proj-tags"><span>Python</span><span>Whisper-style</span><span>Markdown</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">∞<small>audio length</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
-    <article class="card reveal tilt" data-tags="web" data-hover data-title="Poetry OS" data-body="Serif-first poem home: editor, tags, counts, reading modes.">
-      <div class="card-top"><span class="idx">05</span><span class="tag">Web · Craft</span></div>
-      <h3>Poetry OS</h3>
-      <p>Slow web for poems — serif, whitespace, print-grade detail.</p>
-      <div class="metrics"><span><b>Serif</b> first</span><span><b>Print</b> grade</span></div>
-      <div class="stack-row">HTML · CSS · JS</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+    <article class="proj reveal" data-tags="web" data-hover data-title="Poetry OS" data-body="A serif-first home for poems: editor with tags, word and minute counts, reading modes, print-grade detail. Typing practice meets publishing.">
+      <span class="proj-num">05</span>
+      <div>
+        <h3>Poetry OS</h3>
+        <p>A reading and typing sanctuary for poems. Slow web — serif, generous whitespace, print-grade detail.</p>
+        <div class="proj-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">Aa<small>serif first</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
-    <article class="card reveal tilt" data-tags="ai web" data-hover data-title="Chatbot Modules" data-body="Composable bricks: intents, memory, tool calls. Powers the chatbot dev block in the rescheduler queue.">
-      <div class="card-top"><span class="idx">06</span><span class="tag">AI · Kit</span></div>
-      <h3>Chatbot Modules</h3>
-      <p>Plug-and-play conversational bricks, reused across experiments and client work.</p>
-      <div class="metrics"><span><b>Plug</b> and play</span><span><b>Tool</b> calls</span></div>
-      <div class="stack-row">Python · JS · APIs</div>
-      <button class="card-link open-modal" data-hover>Case study</button>
+    <article class="proj reveal" data-tags="ai web" data-hover data-title="Chatbot Modules" data-body="Modular chatbot kit: intents, memory, tool calls, queue-driven tasks. Powers the 'Chatbot dev' block in the rescheduler queue; reused across experiments and client work.">
+      <span class="proj-num">06</span>
+      <div>
+        <h3>Chatbot Modules</h3>
+        <p>Composable conversational bricks — parsing, state, tools — reused across experiments and client work.</p>
+        <div class="proj-tags"><span>Python</span><span>JS</span><span>Tool calls</span></div>
+      </div>
+      <div class="proj-side">
+        <div class="proj-metric">⊕<small>composable</small></div>
+        <button class="proj-link open-modal" data-hover>Case study →</button>
+      </div>
     </article>
   </div>
 </section>
 
-<!-- DEMOS -->
-<section class="section" id="demos">
-  <div class="kicker reveal">02 — Live Demos</div>
-  <h2 class="reveal">Watch them <em>work.</em></h2>
-  <p class="lede reveal">Animated screen recordings of every system. Pure CSS and canvas — no video files, looping forever.</p>
-  <div class="demo-grid">
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-phone">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="cal-header"><span>Mon 12</span><span class="cal-today">Today</span></div>
-          <div class="cal-timeline">
-            <div class="cal-event e1">Study time</div>
-            <div class="cal-event e2">Chatbot dev</div>
-            <div class="cal-event e3">Run</div>
-            <div class="cal-event e4">Bible study</div>
-            <div class="cal-now"></div>
-          </div>
-          <div class="cal-push">Push</div>
-        </div>
-      </div>
-      <div class="demo-info"><h4>Calendar Rescheduler</h4><p>Push · overfill · undo — live day view</p></div>
+<!-- SYSTEMS -->
+<section class="section" id="systems" style="padding-top:0">
+  <div class="sec-no reveal">02 — How they work</div>
+  <h2 class="reveal">Systems, <em>diagrammed.</em></h2>
+  <p class="sec-sub reveal">No mockups, no staged screenshots — just the actual architecture of each system, drawn honestly. Real screen recordings available on request.</p>
+  <div class="sys-grid">
+    <div class="sys reveal">
+      <svg viewBox="0 0 360 210" role="img" aria-label="Rescheduler flow diagram">
+        <rect x="14" y="18" width="100" height="40" rx="8" fill="none" stroke="#e8b44a" stroke-width="1.5"/><text x="64" y="35" text-anchor="middle" fill="#ede7d6" font-size="10" font-family="monospace">event</text><text x="64" y="48" text-anchor="middle" fill="#8a857a" font-size="8" font-family="monospace">tapped</text>
+        <rect x="130" y="18" width="100" height="40" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="180" y="35" text-anchor="middle" fill="#ede7d6" font-size="10" font-family="monospace">freebusy</text><text x="180" y="48" text-anchor="middle" fill="#8a857a" font-size="8" font-family="monospace">scan 14d</text>
+        <rect x="246" y="18" width="100" height="40" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="296" y="35" text-anchor="middle" fill="#ede7d6" font-size="10" font-family="monospace">push / undo</text><text x="296" y="48" text-anchor="middle" fill="#8a857a" font-size="8" font-family="monospace">6h stack</text>
+        <line x1="114" y1="38" x2="130" y2="38" stroke="#e8b44a" stroke-width="1"/><line x1="230" y1="38" x2="246" y2="38" stroke="#8a857a" stroke-width="1"/>
+        <rect x="14" y="80" width="332" height="52" rx="8" fill="rgba(232,180,74,.07)" stroke="none"/><text x="28" y="101" fill="#e8b44a" font-size="10" font-family="monospace">overfill queue →</text><text x="28" y="116" fill="#8a857a" font-size="9" font-family="monospace">common-app · chatbot · study · poetry</text>
+        <rect x="14" y="146" width="332" height="46" rx="8" fill="none" stroke="#3f5a3a" stroke-width="1" stroke-dasharray="4 4"/><text x="28" y="166" fill="#3f5a3a" font-size="10" font-family="monospace">protected blocks never touched</text><text x="28" y="180" fill="#8a857a" font-size="9" font-family="monospace">rest · prayer · church · colour 10/1</text>
+      </svg>
+      <div class="sys-body"><h4>Calendar Rescheduler</h4><p>Push → freebusy scan → move with reason → undo. Overfill swaps cancellations for queued priorities.</p><span class="mono">Apps Script · Calendar API v3 · PWA + APK</span></div>
     </div>
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-terminal">
-        <div class="dt-bar"><i></i><i></i><i></i><span>sms-engine — live</span></div>
-        <div class="dt-body" id="dtBody"></div>
-      </div>
-      <div class="demo-info"><h4>M-PESA Neural Engine</h4><p>Parsing SMS to 29 types to finance intel</p></div>
+    <div class="sys reveal">
+      <svg viewBox="0 0 360 210" role="img" aria-label="SMS engine pipeline diagram">
+        <rect x="14" y="14" width="332" height="36" rx="8" fill="none" stroke="#e8b44a" stroke-width="1.5"/><text x="28" y="36" fill="#ede7d6" font-size="10" font-family="monospace">raw SMS in — safaricom · airtel</text>
+        <rect x="14" y="62" width="158" height="52" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="28" y="82" fill="#ede7d6" font-size="10" font-family="monospace">regex parser</text><text x="28" y="96" fill="#8a857a" font-size="9" font-family="monospace">29 types · 0% fail</text>
+        <rect x="188" y="62" width="158" height="52" rx="8" fill="rgba(232,180,74,.07)" stroke="none"/><text x="202" y="82" fill="#e8b44a" font-size="10" font-family="monospace">neural net</text><text x="202" y="96" fill="#8a857a" font-size="9" font-family="monospace">4.31M · 100% noisy</text>
+        <rect x="14" y="126" width="158" height="52" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="28" y="146" fill="#ede7d6" font-size="10" font-family="monospace">patterns</text><text x="28" y="160" fill="#8a857a" font-size="9" font-family="monospace">P(type) · anomalies</text>
+        <rect x="188" y="126" width="158" height="52" rx="8" fill="none" stroke="#3f5a3a" stroke-width="1"/><text x="202" y="146" fill="#ede7d6" font-size="10" font-family="monospace">finance intel</text><text x="202" y="160" fill="#8a857a" font-size="9" font-family="monospace">runway · okoa risk</text>
+        <line x1="180" y1="180" x2="180" y2="200" stroke="#8a857a" stroke-width="1"/><text x="180" y="196" text-anchor="middle" fill="#8a857a" font-size="8" font-family="monospace">onnx → android</text>
+      </svg>
+      <div class="sys-body"><h4>M-PESA Neural Engine</h4><p>Regex for the clean path, a noise-trained network for the real world, finance intelligence on top.</p><span class="mono">Python · PyTorch · ONNX · Kotlin runner</span></div>
     </div>
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-weave">
-        <canvas id="demoWeave" width="360" height="200"></canvas>
-        <div class="weave-label">Four Threads — Weave canvas</div>
-      </div>
-      <div class="demo-info"><h4>Four Threads</h4><p>Offline habit-weaving, interlace and freeze</p></div>
+    <div class="sys reveal">
+      <svg viewBox="0 0 360 210" role="img" aria-label="Four Threads offline stack diagram">
+        <rect x="14" y="14" width="332" height="40" rx="8" fill="none" stroke="#e8b44a" stroke-width="1.5"/><text x="28" y="38" fill="#ede7d6" font-size="10" font-family="monospace">compose UI — weave canvas</text>
+        <rect x="14" y="66" width="158" height="52" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="28" y="86" fill="#ede7d6" font-size="10" font-family="monospace">room db</text><text x="28" y="100" fill="#8a857a" font-size="9" font-family="monospace">threads · habits</text>
+        <rect x="188" y="66" width="158" height="52" rx="8" fill="none" stroke="#8a857a" stroke-width="1"/><text x="202" y="86" fill="#ede7d6" font-size="10" font-family="monospace">workmanager</text><text x="202" y="100" fill="#8a857a" font-size="9" font-family="monospace">quiet hours</text>
+        <rect x="14" y="130" width="332" height="48" rx="8" fill="none" stroke="#3f5a3a" stroke-width="1" stroke-dasharray="4 4"/><text x="28" y="150" fill="#3f5a3a" font-size="10" font-family="monospace">no network · no accounts · no ads</text><text x="28" y="165" fill="#8a857a" font-size="9" font-family="monospace">json backup — your data stays yours</text>
+      </svg>
+      <div class="sys-body"><h4>Four Threads</h4><p>Offline-first habit OS. Streaks, weave canvas, local reminders — nothing leaves the device.</p><span class="mono">Kotlin · Compose · Room · WorkManager</span></div>
     </div>
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-poetry">
-        <div class="poem-text" id="poemText"></div>
-        <div class="poem-caret"></div>
+  </div>
+</section>
+
+<!-- LAB -->
+<section class="section" id="lab" style="padding-top:0">
+  <div class="sec-no reveal">03 — The lab</div>
+  <h2 class="reveal">Try the <em>machinery.</em></h2>
+  <p class="sec-sub reveal">Two working slices of the real systems, running entirely in your browser.</p>
+  <div class="lab-grid">
+    <div class="lab reveal">
+      <h4>M-PESA classifier</h4>
+      <p>Same decision logic as the on-device model. Paste a money SMS, or try a sample.</p>
+      <label for="smsIn">Input SMS</label>
+      <textarea id="smsIn" rows="4">QHX7K2LMNO Confirmed. Ksh2,450.00 sent to JOHN DOE 0722123456 on 12/9/26 at 9:41 AM. New M-PESA balance is Ksh12,300.50. Transaction cost, Ksh28.00.</textarea>
+      <div class="samples">
+        <button data-sms="send" data-hover>send</button>
+        <button data-sms="fuliza" data-hover>fuliza</button>
+        <button data-sms="okoa" data-hover>okoa data</button>
+        <button data-sms="paybill" data-hover>paybill KPLC</button>
+        <button data-sms="sheng" data-hover>noisy / sheng</button>
       </div>
-      <div class="demo-info"><h4>Poetry OS</h4><p>Serif-first reading and typing sanctuary</p></div>
+      <button class="btn primary" id="classifyBtn" data-hover>Classify</button>
+      <div class="mpesa-out">
+        <div class="mono dim" style="font-size:10px">nn_mega · 4.31M params · on-device</div>
+        <div class="pred"><span id="predLabel">—</span><b id="predConf"></b></div>
+        <div class="confbar"><i id="confFill"></i></div>
+        <div id="predTop" class="mono"></div>
+        <div class="mono dim" id="predMeta" style="font-size:10px">regex fallback 74% · NN 100% under noise</div>
+      </div>
     </div>
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-audio">
-        <div class="waveform" id="waveform"></div>
-        <div class="audio-label">Transcriber — audio to notes</div>
-      </div>
-      <div class="demo-info"><h4>Transcriber</h4><p>Chunked transcription to markdown</p></div>
-    </div>
-    <div class="demo-card reveal tilt" data-hover>
-      <div class="demo-chat">
-        <div class="chat-bubble user">What can you do?</div>
-        <div class="chat-bubble bot">I parse intents, call tools, remember context.</div>
-        <div class="chat-bubble user">Build me something.</div>
-        <div class="chat-bubble bot">Already on it.</div>
-      </div>
-      <div class="demo-info"><h4>Chatbot Modules</h4><p>Composable intents, memory, tools</p></div>
+    <div class="lab reveal">
+      <h4>Scheduler push</h4>
+      <p>The rescheduler's core loop: scan the day's free/busy grid, take the next fitting slot.</p>
+      <label>Task length · <b id="pushMin">60</b> min</label>
+      <input type="range" id="pushRange" min="15" max="180" step="15" value="60">
+      <label>Day busyness · <b id="chaosVal">medium</b></label>
+      <input type="range" id="chaosRange" min="1" max="3" step="1" value="2">
+      <button class="btn primary" id="pushBtn" data-hover>Find free slot</button>
+      <div class="day-sim" id="daySim"></div>
+      <div id="pushOut"></div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section class="section split" id="about">
+<section class="section split" id="about" style="padding-top:0">
   <div class="reveal">
-    <div class="kicker">03 — About</div>
+    <div class="sec-no">04 — About</div>
     <h2>Nairobi-bred.<br><em>Systems-brained.</em></h2>
-    <p class="big-p"><strong>Mweshimiwa Enterprises</strong> is a one-person studio for software that respects people: calm scheduling, honest finance intelligence, offline-first mobile. I ship daily drivers — my calendar app runs my own life, my finance engine has read thousands of Kenyan money messages.</p>
+    <p class="big-p"><strong>Mweshimiwa Enterprises</strong> is a one-person studio for software that respects people: calm scheduling, honest finance intelligence, offline-first mobile. I ship daily drivers — the calendar app runs my own life; the finance engine has read thousands of Kenyan money messages.</p>
     <ul class="principles">
-      <li><b>Calm over clever</b><span>Protected blocks, quiet hours, undo everywhere.</span></li>
-      <li><b>Offline is a feature</b><span>Four Threads and ONNX M-PESA run with zero bars.</span></li>
-      <li><b>Measured, not vibes</b><span>0% parse fail. 100% noisy accuracy.</span></li>
+      <li><span class="n">i.</span><div><b>Calm over clever</b><span>Protected blocks, quiet hours, undo everywhere. Software should lower the heart rate.</span></div></li>
+      <li><span class="n">ii.</span><div><b>Offline is a feature</b><span>Four Threads and the ONNX M-PESA model run with zero bars.</span></div></li>
+      <li><span class="n">iii.</span><div><b>Measured, not vibes</b><span>0% parse fail. 100% noisy accuracy. If it isn't measured, it's decoration.</span></div></li>
     </ul>
   </div>
-  <div class="about-card reveal tilt">
-    <div class="avatar">M</div>
-    <div class="mono dim">mweshimiwa.json</div>
+  <div class="about-card reveal">
+    <div class="mono dim" style="font-size:10px;letter-spacing:.12em">MWESHIMIWA.JSON</div>
     <pre class="mono about-json">{
   "studio": "Mweshimiwa Enterprises",
   "human": "Emmanuel (Nairobi, EAT)",
@@ -242,41 +289,41 @@
     "android apps", "web apps"],
   "status": "open for work"
 }</pre>
-    <a class="btn primary" href="#contact" data-hover>Contact</a>
+    <a class="btn primary" href="#contact" data-hover>Hire Mweshimiwa</a>
   </div>
 </section>
 
 <!-- STACK -->
-<section class="section" id="stack">
-  <div class="kicker reveal">04 — Stack and Proof</div>
+<section class="section" id="stack" style="padding-top:0">
+  <div class="sec-no reveal">05 — Stack &amp; proof</div>
   <h2 class="reveal">Brutal where it counts, <em>beautiful</em> where it shows.</h2>
-  <div class="stack-grid">
-    <div class="s reveal"><h4>AI / ML</h4><p>Python · PyTorch · ONNX · noise-augmented training · eval gauntlets</p><div class="bar"><i style="--w:92%"></i></div></div>
-    <div class="s reveal"><h4>Mobile</h4><p>Kotlin · Compose · Room · WorkManager · WebView bridges</p><div class="bar"><i style="--w:84%"></i></div></div>
-    <div class="s reveal"><h4>Web</h4><p>Apps Script · Calendar API v3 · PWA · GitHub Pages</p><div class="bar"><i style="--w:88%"></i></div></div>
-    <div class="s reveal"><h4>Studio</h4><p>Mweshimiwa Enterprises · scoping · 48h replies · clean handover</p><div class="bar"><i style="--w:90%"></i></div></div>
+  <div class="stack-grid" style="margin-top:36px">
+    <div class="s reveal"><h4>AI / ML</h4><p>Python · PyTorch · ONNX · noise-augmented training · eval gauntlets</p></div>
+    <div class="s reveal"><h4>Mobile</h4><p>Kotlin · Compose · Room · WorkManager · WebView bridges</p></div>
+    <div class="s reveal"><h4>Web</h4><p>Apps Script · Calendar API v3 · PWA · GitHub Pages</p></div>
+    <div class="s reveal"><h4>Studio</h4><p>Scoping · 48h replies · clean handover · documentation</p></div>
   </div>
   <div class="proof reveal">
     <div class="p"><b>100%</b><span>noisy accuracy (mega NN)</span></div>
     <div class="p"><b>0.0</b><span>parse fail over 5k SMS</span></div>
-    <div class="p"><b>14d</b><span>push horizon 8:00–22:45</span></div>
+    <div class="p"><b>14d</b><span>push horizon, 8:00–22:45</span></div>
     <div class="p"><b>48h</b><span>max reply time</span></div>
   </div>
 </section>
 
 <!-- GITHUB -->
-<section class="section" id="github">
-  <div class="kicker reveal">05 — Live from GitHub</div>
-  <h2 class="reveal">Fresh off <em>the forge.</em> <a class="inline" href="https://github.com/mega7306626007" target="_blank" rel="noopener" data-hover>@mega7306626007</a></h2>
-  <div class="mono dim reveal" id="ghStatus">fetching repos…</div>
-  <div class="grid" id="ghGrid"></div>
+<section class="section" id="github" style="padding-top:0">
+  <div class="sec-no reveal">06 — Live from GitHub</div>
+  <h2 class="reveal">Fresh off <em>the forge.</em> <a style="color:var(--accent-ink);border-bottom:1px solid var(--accent)" href="https://github.com/mega7306626007" target="_blank" rel="noopener" data-hover>@mega7306626007</a></h2>
+  <div class="mono dim reveal" id="ghStatus" style="font-size:11px;margin-bottom:20px">fetching repos…</div>
+  <div class="gh-grid" id="ghGrid"></div>
 </section>
 
 <!-- CONTACT -->
-<section class="section contact" id="contact">
-  <div class="kicker reveal">06 — Contact</div>
+<section class="section contact" id="contact" style="padding-top:0">
+  <div class="sec-no reveal">07 — Contact</div>
   <h2 class="mega reveal">Have something<br><em>worth building?</em></h2>
-  <p class="lede reveal">Email <b>lemuelmwesh@gmail.com</b>. Include scope, timeline, budget — reply within 48h.</p>
+  <p class="lede reveal" style="margin-top:20px">Email <b>lemuelmwesh@gmail.com</b> with scope, timeline, and budget. Reply within 48 hours.</p>
   <div class="contact-row reveal">
     <a class="btn primary" href="mailto:lemuelmwesh@gmail.com" data-hover>lemuelmwesh@gmail.com</a>
     <button class="btn ghost" id="copyEmail" data-hover>Copy email</button>
@@ -284,14 +331,14 @@
   <div class="socials reveal">
     <a href="https://github.com/mega7306626007" target="_blank" rel="noopener" data-hover>GitHub</a>
     <a href="mailto:lemuelmwesh@gmail.com" data-hover>Email</a>
-    <a href="#demos" data-hover>Demos</a>
+    <a href="#lab" data-hover>The lab</a>
   </div>
 </section>
 </main>
 
 <footer>
   <span class="mono">© 2026 Mweshimiwa Enterprises · Emmanuel · Nairobi</span>
-  <span class="mono dim">No framework, just intent.</span>
+  <span class="mono dim">Set in Fraunces &amp; Inter · press K for commands</span>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top" data-hover>↑</button>
@@ -299,7 +346,7 @@
 <div class="overlay" id="overlay"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true">
   <button class="modal-x" id="modalX" aria-label="Close">✕</button>
-  <div class="kicker" id="modalKick">Case Study</div>
+  <div class="sec-no" style="margin-bottom:6px">Case study</div>
   <h3 id="modalTitle"></h3>
   <p id="modalBody"></p>
   <div class="modal-actions">
@@ -308,7 +355,7 @@
 </div>
 
 <div class="palette" id="palette">
-  <input id="palInput" class="mono" placeholder="Type: work · about · email · github · contact" autocomplete="off">
+  <input id="palInput" class="mono" placeholder="work · systems · lab · email · github · contact" autocomplete="off">
   <div id="palList"></div>
 </div>
 
