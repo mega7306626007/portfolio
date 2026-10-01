@@ -30,7 +30,11 @@ document.querySelectorAll(".tilt").forEach(card => { card.addEventListener("mous
   card.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`; });
   card.addEventListener("mouseleave", () => card.style.transform = ""); });
 
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); }), { threshold: .1 });
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add("in");
+  if (e.target.classList.contains("sys")) [...e.target.querySelectorAll("svg > *")].forEach((c, i) => c.style.animationDelay = (i * 45) + "ms");
+}), { threshold: .1 });
 document.querySelectorAll(".reveal").forEach(el => io.observe(el));
 document.querySelectorAll(".reveal").forEach(el => {
   const sibs = [...el.parentElement.children].filter(c => c.classList && c.classList.contains("reveal"));
@@ -289,6 +293,63 @@ $("pushBtn").addEventListener("click", () => { const need = +$("pushRange").valu
       $("pushOut").textContent = ok ? `moved ${need}m → first fitting slot after ${busy} busy blocks · undo open 6h` : "no room today — rolled to tomorrow 8:00";
       confetti(innerWidth / 2, 320, 6); } }, 200); });
 renderDay(13, -1, 60); renderWeek(-1);
+
+// Lab: PesaFlow money language parser
+function parseMoneyNL(raw) {
+  const s = raw.toLowerCase();
+  const m = s.match(/(?:kshs?\s*)?(\d[\d,]*(?:\.\d{1,2})?)/);
+  const amount = m ? m[1].replace(/,/g, "") : null;
+  let type = "SPEND", cat = "Everyday";
+  if (/withdraw|cash\s*out|kwa agent|agent/.test(s)) { type = "WITHDRAW"; cat = "Cash · agent"; }
+  else if (/deposit|cash\s*in|weka/.test(s)) { type = "DEPOSIT"; cat = "Cash in"; }
+  else if (/send|tuma|sent|nipi/.test(s)) { type = "SEND"; cat = /bro|friend|msee|shosh/.test(s) ? "People · send" : "Transfer"; }
+  else if (/lipa|pay|paid|bill|rent|kplc/.test(s)) { type = "PAY"; cat = /kplc|light|stima|bill/.test(s) ? "Utilities · bill" : /rent|nyumba/.test(s) ? "Rent" : "Payment"; }
+  else if (/airtime|bundles?|data/.test(s)) { type = "AIRTIME"; cat = "Airtime & data"; }
+  else if (/borrow|nipee|mkopo|loan/.test(s)) { type = "BORROW"; cat = "Debt · friend"; }
+  else if (/buy|nunua|lunch|food|choma|ugali|mandazi|supper|breakfast/.test(s)) { type = "BUY"; cat = "Food & campus"; }
+  else if (/receive|pata|imefika|imepokelewa/.test(s)) { type = "RECEIVE"; cat = "Income"; }
+  const conf = amount ? 88 + Math.random() * 10 : 52 + Math.random() * 16;
+  return { type, amount, cat, conf };
+}
+function renderNL(raw) {
+  const r = parseMoneyNL(raw);
+  const rows = [["type", r.type], ["category", r.cat], ["source", "natural language · en/sw/sheng"], ["confidence", r.conf.toFixed(1) + "%"]];
+  $("nlOut").innerHTML =
+    (r.amount ? `<div class="nl-amt">KSh ${Number(r.amount).toLocaleString()}<small>ledger entry</small></div>`
+              : `<div class="nl-amt">?<small>no number heard — say an amount</small></div>`) +
+    rows.map(([k, v], i) => `<div class="nlrow" style="animation-delay:${(.15 + i * .1).toFixed(2)}s"><span>${k}</span><b>${v}</b></div>`).join("");
+}
+document.querySelectorAll("[data-nl]").forEach(b => b.addEventListener("click", () => { $("nlIn").value = b.dataset.nl; renderNL(b.dataset.nl); }));
+const nlForm = $("nlForm");
+if (nlForm) nlForm.addEventListener("submit", e => { e.preventDefault(); const v = $("nlIn").value.trim(); if (v) renderNL(v); });
+
+// Lab: Parlons drill
+const QS = [
+  { q: "\u201cI\u2019m fine\u201d — in French?", o: ["Je vais bien", "Je suis tomb\u00e9", "J\u2019ai faim de pain"], a: 0 },
+  { q: "\u201cWhere is the station?\u201d", o: ["Qui est ton fr\u00e8re ?", "O\u00f9 est la gare ?", "Comment \u00e7a co\u00fbte ?"], a: 1 },
+  { q: "\u201cThank you very much, my friend\u201d", o: ["Bonne nuit, mon ami", "Je voudrais un caf\u00e9", "Merci beaucoup, mon ami"], a: 2 },
+  { q: "\u201cI would like to speak French\u201d", o: ["Je voudrais parler fran\u00e7ais", "Je parle allemand", "Il fait froid aujourd\u2019hui"], a: 0 },
+];
+let qi = 0, qscore = 0, qLock = false;
+function renderQ() {
+  const box = $("quiz"); if (!box) return;
+  if (qi >= QS.length) {
+    box.innerHTML = `<div class="q-end"><b>${qscore}/${QS.length}</b><span>${qscore === QS.length ? "Simba: parfait — hakuna makosa!" : "Simba keeps drilling — jaribu tena"}</span></div><div class="q-opts"><button class="q-opt" id="qAgain" data-hover>Run it again</button></div>`;
+    $("qAgain").onclick = () => { qi = 0; qscore = 0; renderQ(); };
+    return;
+  }
+  const item = QS[qi];
+  box.innerHTML = `<div class="q-prog"><span>parlons · drill</span><span>${qi + 1} / ${QS.length} · score ${qscore}</span></div><div class="q-text">${item.q}</div><div class="q-opts">${item.o.map((o, i) => `<button class="q-opt" data-i="${i}" data-hover>${o}</button>`).join("")}</div><div class="q-msg" id="qMsg"></div>`;
+  box.querySelectorAll(".q-opt").forEach(b => b.onclick = () => {
+    if (qLock) return; qLock = true;
+    const i = +b.dataset.i, ok = i === item.a, msg = $("qMsg");
+    const opts = [...box.querySelectorAll(".q-opt")];
+    if (ok) { b.classList.add("ok"); qscore++; msg.textContent = "Simba: exactement !"; msg.classList.add("good"); }
+    else { b.classList.add("no"); opts[item.a].classList.add("ok"); msg.textContent = `Simba: non — it\u2019s \u201c${item.o[item.a]}\u201d`; }
+    setTimeout(() => { qLock = false; qi++; renderQ(); }, ok ? 850 : 1600);
+  });
+}
+renderQ();
 
 // Live GitHub
 const HIDE = new Set(["portfolio", "mega7306626007", "automatic-spoon", "New-folder--4-", "global-digest2", "global-digest-mvp"]);
