@@ -1,35 +1,41 @@
-# Emmanuel — Obsidian Onyx Portfolio
+# Mwesh Portfolio — Mweshimiwa Enterprises
 
-World-class, zero-build static site. Ready for **GitHub Pages**.
+**Live:** [mega7306626007.github.io/portfolio](https://mega7306626007.github.io/portfolio/)
+
+A world-class, zero-build static portfolio for Emmanuel (Mwesh). Warm editorial design — paper tones, Fraunces serif headlines, Inter body, JetBrains Mono for code. No frameworks, no bundler, no dependencies.
+
+## What's on it
+
+- **Hero + terminal** — live typewriter intro with command hints
+- **Work** — 8 featured projects: Jarvis (mwesh), PesaFlow, SMS Engine, Calendar Rescheduler, Transcriber, PyChat, The Heart v2, Parlons — every row links its real repo + live demo
+- **Systems** — honest SVG architecture diagrams of the three flagship systems
+- **Lab** — interactive demos: M-PESA SMS classifier (top-3 ranking + test history), scheduler push simulator (week view), Jarvis intent router (EN × SW × Sheng × FR)
+- **GitHub feed** — live repo feed pulled from the GitHub API
+- **Contact** — copy-to-clipboard email + GitHub
 
 ## Preview locally
+
 ```powershell
-cd portfolio-site
 python -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Deploy to GitHub Pages (2 min)
+## Deploy
 
-**Option A — User site (recommended, gives `USERNAME.github.io`):**
-1. Create a new public repo named exactly `USERNAME.github.io` (replace USERNAME).
-2. Copy the contents of `portfolio-site/` into the repo root (index.html, styles.css, script.js, 404.html, .nojekyll).
-3. Push. Go to repo **Settings → Pages → Deploy from branch → `main` / root**.
-4. Live at `https://USERNAME.github.io` in ~1 min.
+Already wired to **GitHub Pages**: push to `main` and it goes live (via `.github/workflows/pages.yml`), or set **Settings → Pages → Deploy from branch → `main` / root**.
 
-**Option B — Project site:**
-1. Create repo `portfolio`, copy `portfolio-site/` contents to root, push.
-2. Settings → Pages → branch `main`. Live at `https://USERNAME.github.io/portfolio/`.
-
-The included workflow (`.github/workflows/pages.yml`) also auto-deploys on push — just push and it goes live.
-
-## Customize (1 min)
-- Open `script.js` → edit `SITE` object (email, github, linkedin).
-- Open `index.html` → replace all `USERNAME` links + `hello@emmanuel.systems`.
-- Swap stats, timeline, projects — each project is one `<article class="card">`.
+> `index.html` carries a `<base href>` pointing at the project URL (`…github.io/portfolio/`). If you fork this as a user site or under a different name, update or remove that tag.
 
 ## Files
-- `index.html` — all content
-- `styles.css` — Obsidian Onyx theme
-- `script.js` — particles, typer, filters, modal, palette, Nairobi clock
-- `404.html`, `.nojekyll` — Pages helpers
+
+- `index.html` — all content (sections, project rows, lab panels)
+- `styles.css` — warm editorial design system (palette, type, components)
+- `script.js` — terminal, classifier, push sim, Jarvis router, modal, command palette, GitHub feed
+- `.nojekyll` — Pages helper
+- `.github/workflows/pages.yml` — auto-deploy on push
+
+## Customize
+
+- `script.js` → `SITE` object (email, GitHub URL, API endpoint)
+- `styles.css` → CSS variables at the top (paper, ink, accent, moss…)
+- Each project is one `<article class="proj">` block in `index.html`
