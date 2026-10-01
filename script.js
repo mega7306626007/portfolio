@@ -2,8 +2,15 @@ const SITE = { email: "lemuelmwesh@gmail.com", github: "https://github.com/mega7
 const $ = id => document.getElementById(id);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-addEventListener("load", () => setTimeout(() => $("loader").classList.add("done"), 600));
-setTimeout(() => $("loader").classList.add("done"), 2400);
+let booted = false;
+function boot() {
+  if (booted) return; booted = true;
+  document.querySelectorAll(".hero .reveal").forEach(el => el.classList.add("in"));
+  document.querySelectorAll("[data-count]").forEach(b => cio.observe(b));
+}
+function ready() { $("loader").classList.add("done"); setTimeout(boot, 180); }
+addEventListener("load", () => setTimeout(ready, 600));
+setTimeout(ready, 2400);
 
 function tick() { try { $("nairobiTime").textContent = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Nairobi" }).format(new Date()); } catch {} }
 tick(); setInterval(tick, 20000);
@@ -26,6 +33,9 @@ const cursor = $("cursor");
 if (cursor && matchMedia("(hover: hover) and (pointer: fine)").matches) {
   let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
   addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.classList.remove("hide"); });
+  addEventListener("mousedown", () => cursor.classList.add("down"));
+  addEventListener("mouseup", () => cursor.classList.remove("down"));
+  addEventListener("blur", () => cursor.classList.remove("down"));
   document.addEventListener("mouseleave", () => cursor.classList.add("hide"));
   document.querySelectorAll("[data-hover]").forEach(el => {
     el.addEventListener("mouseenter", () => cursor.classList.add("big"));
@@ -41,13 +51,65 @@ document.querySelectorAll(".tilt").forEach(card => { card.addEventListener("mous
   card.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`; });
   card.addEventListener("mouseleave", () => card.style.transform = ""); });
 
+function splitWords(el) {
+  if (REDUCED) return;
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const texts = [];
+  while (walker.nextNode()) texts.push(walker.currentNode);
+  let n = 0;
+  texts.forEach(t => {
+    if (!t.nodeValue || !t.nodeValue.trim()) return;
+    const frag = document.createDocumentFragment();
+    t.nodeValue.split(/(\s+)/).forEach(p => {
+      if (!p) return;
+      if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+      const w = document.createElement("span"); w.className = "wm";
+      const i = document.createElement("i");
+      i.textContent = p;
+      i.style.transitionDelay = Math.min(n * 42, 660) + "ms";
+      n++;
+      w.appendChild(i); frag.appendChild(w);
+    });
+    t.parentNode.replaceChild(frag, t);
+  });
+  el.classList.add("split");
+}
+if (!REDUCED) {
+  document.querySelectorAll(".section h2").forEach(splitWords);
+  document.querySelectorAll(".display .line").forEach(l => {
+    const li = document.createElement("span"); li.className = "li";
+    while (l.firstChild) li.appendChild(l.firstChild);
+    l.appendChild(li);
+  });
+}
+document.querySelectorAll(".sys .flow").forEach(f => {
+  try { const L = Math.ceil(f.getTotalLength()); if (L > 0) f.style.setProperty("--dl", L); } catch {}
+});
+function seqSys(sys) {
+  const svg = sys.querySelector("svg"); if (!svg) return;
+  const kids = [...svg.children].filter(k => k.tagName.toLowerCase() !== "defs");
+  const cls = k => k.getAttribute("class") || "";
+  const nodes = kids.filter(k => !/flow|dot/.test(cls(k)));
+  const flows = kids.filter(k => /flow/.test(cls(k)));
+  const dots = kids.filter(k => /dot/.test(cls(k)));
+  nodes.forEach((k, i) => k.style.animationDelay = (i * 26) + "ms");
+  const f0 = nodes.length * 26 + 60;
+  flows.forEach((f, i) => f.style.setProperty("--fd", (f0 + i * 65) + "ms"));
+  const d0 = f0 + flows.length * 65 + 240;
+  dots.forEach((d, i) => d.style.animationDelay = (d0 + i * 60) + "ms");
+}
+
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;
-  e.target.classList.add("in");
-  if (e.target.classList.contains("sys")) [...e.target.querySelectorAll("svg > *")].forEach((c, i) => c.style.animationDelay = (i * 45) + "ms");
+  const el = e.target;
+  if (el.classList.contains("sys") && !REDUCED) seqSys(el);
+  el.classList.add("in");
+  const d = parseInt(el.style.transitionDelay) || 0;
+  if (d) setTimeout(() => { if (el.style.transitionDelay) el.style.transitionDelay = ""; }, 900 + d);
 }), { threshold: .1 });
-document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+document.querySelectorAll(".reveal").forEach(el => { if (!el.closest(".hero")) io.observe(el); });
 document.querySelectorAll(".reveal").forEach(el => {
+  if (el.closest(".hero")) return;
   const sibs = [...el.parentElement.children].filter(c => c.classList && c.classList.contains("reveal"));
   const i = Math.min(sibs.indexOf(el), 6);
   if (i > 0) el.style.transitionDelay = (i * 70) + "ms";
@@ -68,16 +130,16 @@ $("toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth"
 const cio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const b = e.target, end = +b.dataset.count; cio.unobserve(b);
   const t0 = performance.now(); (function step(t) { const p = Math.min((t - t0) / 1200, 1);
     b.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString() + (end === 100 ? "%" : "+"); if (p < 1) requestAnimationFrame(step); })(t0); }), { threshold: .5 });
-document.querySelectorAll("[data-count]").forEach(b => cio.observe(b));
 
 const pio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; pio.unobserve(e.target);
   const b = e.target, txt = b.textContent, m = txt.match(/^([\d.]+)/); if (!m) return;
   const end = parseFloat(m[1]), dec = m[1].includes("."), suf = txt.slice(m[1].length);
   if (REDUCED) { b.textContent = txt; return; }
-  const t0 = performance.now();
-  (function step(t) { const pr = Math.min((t - t0) / 1300, 1), v = end * (1 - Math.pow(1 - pr, 3));
+  const idx = Math.max(0, [...b.closest(".proof").children].indexOf(b.parentElement));
+  const t0 = performance.now() + idx * 140;
+  requestAnimationFrame(function step(t) { const pr = Math.max(0, Math.min((t - t0) / 1300, 1)), v = end * (1 - Math.pow(1 - pr, 3));
     b.textContent = (dec ? v.toFixed(1) : Math.round(v).toLocaleString()) + suf;
-    if (pr < 1) requestAnimationFrame(step); else b.textContent = txt; })(t0); }), { threshold: .6 });
+    if (pr < 1) requestAnimationFrame(step); else b.textContent = txt; }); }), { threshold: .6 });
 document.querySelectorAll(".p b").forEach(b => pio.observe(b));
 
 const cv = $("particles"), ctx = cv.getContext("2d"); let pts = [];
@@ -90,7 +152,27 @@ for (let i = 0; i < 40; i++) pts.push({ x: Math.random() * innerWidth, y: Math.r
 
 document.querySelectorAll(".f").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll(".f").forEach(b => b.classList.remove("active")); btn.classList.add("active");
-  const f = btn.dataset.filter; document.querySelectorAll("#projectGrid .proj").forEach(c => c.classList.toggle("hide", f !== "all" && !c.dataset.tags.includes(f))); }));
+  const f = btn.dataset.filter;
+  const cards = [...document.querySelectorAll("#projectGrid .proj")];
+  let vis = 0;
+  cards.forEach(c => {
+    const show = f === "all" || c.dataset.tags.includes(f);
+    c.style.transitionDelay = "0ms";
+    if (show) {
+      const delay = vis * 30; vis++;
+      if (REDUCED) { c.classList.remove("hide", "fadeout"); return; }
+      if (c.classList.contains("hide")) { c.classList.remove("hide"); c.classList.add("fadeout"); }
+      void c.offsetWidth;
+      c.style.transitionDelay = delay + "ms";
+      requestAnimationFrame(() => c.classList.remove("fadeout"));
+    } else if (!c.classList.contains("hide")) {
+      if (REDUCED) { c.classList.add("hide"); return; }
+      c.classList.add("fadeout");
+      setTimeout(() => { if (c.classList.contains("fadeout")) c.classList.add("hide"); }, 420);
+    }
+  });
+  setTimeout(() => cards.forEach(c => { if (!c.classList.contains("fadeout")) c.style.transitionDelay = ""; }), 950);
+}));
 
 const CASES = {
 "Jarvis (Mwesh) — Voice Assistant": `
@@ -213,7 +295,9 @@ const CASES = {
 };
 
 const overlay = $("overlay"), modal = $("modal");
-function openModal(t, b) { $("modalTitle").textContent = t; $("modalBody").innerHTML = b; overlay.classList.add("open"); modal.classList.add("open"); modal.scrollTop = 0; }
+function openModal(t, b) { $("modalTitle").textContent = t; $("modalBody").innerHTML = b;
+  if (!REDUCED) [...$("modalBody").children].forEach((c, i) => { c.style.animation = `fadeUp .5s var(--ease) ${(.06 + i * .05).toFixed(2)}s backwards`; });
+  overlay.classList.add("open"); modal.classList.add("open"); modal.scrollTop = 0; }
 function closeModal() { overlay.classList.remove("open"); modal.classList.remove("open"); }
 document.querySelectorAll(".open-modal").forEach(b => b.addEventListener("click", e => { const c = e.target.closest(".proj"); openModal(c.dataset.title, CASES[c.dataset.title] || c.dataset.body); }));
 $("modalX").addEventListener("click", closeModal); overlay.addEventListener("click", closeModal); $("modalCta").addEventListener("click", closeModal);
@@ -377,13 +461,16 @@ renderQ();
 // Live GitHub
 const HIDE = new Set(["portfolio", "mega7306626007", "automatic-spoon", "New-folder--4-", "global-digest2", "global-digest-mvp"]);
 const LANG = { Python: "#3572A5", Kotlin: "#A97BFF", JavaScript: "#f1e05a", HTML: "#e34c26", CSS: "#563d7c", Shell: "#89e051", Dart: "#00B4AB", Ruby: "#701516", PHP: "#4F5D95" };
+function revealGh() { [...$("ghGrid").children].forEach((c, i) => { c.style.transitionDelay = (i * 90) + "ms"; io.observe(c); }); }
 fetch(SITE.api).then(r => r.json()).then(all => {
   const repos = all.filter(r => !HIDE.has(r.name)).slice(0, 6);
   $("ghStatus").textContent = `${repos.length} repos, freshest first · live`;
   $("liveStars").textContent = `${all.filter(r => !HIDE.has(r.name)).length} public repos`;
   $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
+  revealGh();
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
-  $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`; });
+  $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`;
+  revealGh(); });
 
 // Lab: Jarvis intent router (mirrors the on-device CommandRouter)
 const JJOKES = ["Why do programmers prefer dark mode? Because light attracts bugs.", "Niko na PhD kwa kuchelewa — lakini leo nimefika mapema.", "Pourquoi les plongeurs plongent-ils toujours en arrière ? Parce que sinon, ils tombent dans le bateau."];
