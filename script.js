@@ -23,7 +23,18 @@ function confetti(x, y, n = 8) { if (REDUCED) return; for (let i = 0; i < n; i++
   s.style.setProperty("--rot", (Math.random() * 540 - 270) + "deg"); document.body.appendChild(s); setTimeout(() => s.remove(), 1000); } }
 
 const cursor = $("cursor");
-if (cursor) addEventListener("mousemove", e => { cursor.style.left = e.clientX + "px"; cursor.style.top = e.clientY + "px"; });
+if (cursor && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  let mx = innerWidth / 2, my = innerHeight / 2, cx = mx, cy = my;
+  addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.classList.remove("hide"); });
+  document.addEventListener("mouseleave", () => cursor.classList.add("hide"));
+  document.querySelectorAll("[data-hover]").forEach(el => {
+    el.addEventListener("mouseenter", () => cursor.classList.add("big"));
+    el.addEventListener("mouseleave", () => cursor.classList.remove("big"));
+  });
+  (function follow() { cx += (mx - cx) * .2; cy += (my - cy) * .2;
+    cursor.style.left = cx.toFixed(1) + "px"; cursor.style.top = cy.toFixed(1) + "px";
+    requestAnimationFrame(follow); })();
+}
 
 document.querySelectorAll(".tilt").forEach(card => { card.addEventListener("mousemove", e => { const r = card.getBoundingClientRect();
   const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
@@ -49,13 +60,25 @@ const navIo = new IntersectionObserver(es => es.forEach(e => {
 document.querySelectorAll("section[id]").forEach(s => navIo.observe(s));
 
 addEventListener("scroll", () => { const h = document.documentElement; const p = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
-  $("progress").style.width = p + "%"; $("toTop").classList.toggle("show", h.scrollTop > 700); }, { passive: true });
+  $("progress").style.width = p + "%"; $("toTop").classList.toggle("show", h.scrollTop > 700);
+  $("nav").classList.toggle("small", h.scrollTop > 70);
+  const gh = document.querySelector(".hero-ghost"); if (gh && h.scrollTop < 1000) gh.style.transform = `translateY(${(h.scrollTop * .16).toFixed(1)}px)`; }, { passive: true });
 $("toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
 
 const cio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const b = e.target, end = +b.dataset.count; cio.unobserve(b);
   const t0 = performance.now(); (function step(t) { const p = Math.min((t - t0) / 1200, 1);
     b.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))).toLocaleString() + (end === 100 ? "%" : "+"); if (p < 1) requestAnimationFrame(step); })(t0); }), { threshold: .5 });
 document.querySelectorAll("[data-count]").forEach(b => cio.observe(b));
+
+const pio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; pio.unobserve(e.target);
+  const b = e.target, txt = b.textContent, m = txt.match(/^([\d.]+)/); if (!m) return;
+  const end = parseFloat(m[1]), dec = m[1].includes("."), suf = txt.slice(m[1].length);
+  if (REDUCED) { b.textContent = txt; return; }
+  const t0 = performance.now();
+  (function step(t) { const pr = Math.min((t - t0) / 1300, 1), v = end * (1 - Math.pow(1 - pr, 3));
+    b.textContent = (dec ? v.toFixed(1) : Math.round(v).toLocaleString()) + suf;
+    if (pr < 1) requestAnimationFrame(step); else b.textContent = txt; })(t0); }), { threshold: .6 });
+document.querySelectorAll(".p b").forEach(b => pio.observe(b));
 
 const cv = $("particles"), ctx = cv.getContext("2d"); let pts = [];
 function rs() { cv.width = innerWidth; cv.height = innerHeight; } rs(); addEventListener("resize", rs);
@@ -353,11 +376,12 @@ renderQ();
 
 // Live GitHub
 const HIDE = new Set(["portfolio", "mega7306626007", "automatic-spoon", "New-folder--4-", "global-digest2", "global-digest-mvp"]);
+const LANG = { Python: "#3572A5", Kotlin: "#A97BFF", JavaScript: "#f1e05a", HTML: "#e34c26", CSS: "#563d7c", Shell: "#89e051", Dart: "#00B4AB", Ruby: "#701516", PHP: "#4F5D95" };
 fetch(SITE.api).then(r => r.json()).then(all => {
   const repos = all.filter(r => !HIDE.has(r.name)).slice(0, 6);
   $("ghStatus").textContent = `${repos.length} freshest repositories · live`;
   $("liveStars").textContent = `${all.filter(r => !HIDE.has(r.name)).length} public repos`;
-  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
+  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
   $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`; });
 

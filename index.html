@@ -51,6 +51,7 @@
 
 <main id="top">
 <section class="hero">
+  <div class="hero-ghost" aria-hidden="true">M</div>
   <div class="hero-left">
     <div class="eyebrow reveal"><span class="pulse"></span> Mweshimiwa Enterprises · Nairobi — <span id="nairobiTime">--:--</span> EAT</div>
     <h1 class="display reveal">
@@ -331,7 +332,7 @@
   <p class="sec-sub reveal">Five working slices of the five flagship systems, running entirely in your browser — paste, push, parse, and talk to them.</p>
   <div class="lab-grid">
     <div class="lab reveal">
-      <h4>M-PESA classifier</h4>
+      <h4>M-PESA classifier <span class="lab-no">M/01</span></h4>
       <p>Same decision logic as the on-device model — now with ranked top-3 and a test history. Paste a money SMS, or try a sample.</p>
       <label for="smsIn">Input SMS</label>
       <textarea id="smsIn" rows="4">QHX7K2LMNO Confirmed. Ksh2,450.00 sent to JOHN DOE 0722123456 on 12/9/26 at 9:41 AM. New M-PESA balance is Ksh12,300.50. Transaction cost, Ksh28.00.</textarea>
@@ -356,7 +357,7 @@
       </div>
     </div>
     <div class="lab reveal">
-      <h4>Scheduler push</h4>
+      <h4>Scheduler push <span class="lab-no">M/02</span></h4>
       <p>The rescheduler's core loop: scan the day's free/busy grid, take the next fitting slot — or roll to the next open day.</p>
       <label>Task length · <b id="pushMin">60</b> min</label>
       <input type="range" id="pushRange" min="15" max="180" step="15" value="60">
@@ -368,7 +369,7 @@
       <div id="pushOut"></div>
     </div>
     <div class="lab reveal">
-      <h4>PesaFlow · money language</h4>
+      <h4>PesaFlow · money language <span class="lab-no">M/03</span></h4>
       <p>The NL parser: type money talk the way you’d actually say it — Sheng, English, half-English — and get a structured transaction back.</p>
       <div class="samples">
         <button data-nl="nika withdraw 500 kwa agent" data-hover>withdraw</button>
@@ -381,12 +382,12 @@
       <div class="nl-out" id="nlOut"><span class="mono dim">awaiting input — try a chip above</span></div>
     </div>
     <div class="lab reveal">
-      <h4>Parlons · le drill</h4>
+      <h4>Parlons · le drill <span class="lab-no">M/04</span></h4>
       <p>How Simba drills you: one phrase, three options, instant correction. Wrong answers don’t fail you — they teach you.</p>
       <div class="quiz" id="quiz"></div>
     </div>
     <div class="lab span2 reveal">
-      <h4>Jarvis — intent router</h4>
+      <h4>Jarvis — intent router <span class="lab-no">M/05</span></h4>
       <p>A working slice of the Mwesh assistant: type like you talk — English, Kiswahili, or French. Same routing idea as the on-device CommandRouter.</p>
       <div class="jchips">
         <button data-j="hello, how are you?" data-hover>greeting</button>
@@ -476,6 +477,7 @@
 <footer>
   <span class="mono">© 2026 Mweshimiwa Enterprises · Emmanuel · Nairobi</span>
   <span class="mono dim">Set in Fraunces &amp; Inter · press K for commands</span>
+  <div class="foot-word" aria-hidden="true">MWESHIMIWA</div>
 </footer>
 
 <button class="to-top" id="toTop" aria-label="Back to top" data-hover>↑</button>
