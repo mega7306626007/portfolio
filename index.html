@@ -369,6 +369,11 @@
         <div class="confbar"><i id="confFill"></i></div>
         <div id="predTop" class="mono"></div>
         <div class="mono dim" id="predMeta" style="font-size:10px">regex fallback 74% · NN 100% under noise</div>
+        <div class="mpesa-extra">
+          <div class="mx"><span>amount</span><b id="mxAmt">—</b></div>
+          <div class="mx"><span>balance</span><b id="mxBal">—</b></div>
+          <div class="mx"><span>regex</span><b id="mxRegex">—</b></div>
+        </div>
       </div>
       <div class="hist">
         <div class="mono dim" style="font-size:10px;letter-spacing:.1em">TEST HISTORY</div>
@@ -383,6 +388,10 @@
       <label>Day busyness · <b id="chaosVal">medium</b></label>
       <input type="range" id="chaosRange" min="1" max="3" step="1" value="2">
       <button class="btn primary" id="pushBtn" data-hover>Find free slot</button>
+      <div class="sched-ctl">
+        <button class="btn ghost" id="undoBtn" data-hover>Undo last push</button>
+        <label class="prot"><input type="checkbox" id="protToggle" checked> protect sleep 22:00–06:00</label>
+      </div>
       <div class="week-strip" id="weekStrip"></div>
       <div class="day-sim" id="daySim"></div>
       <div id="pushOut"></div>
@@ -399,10 +408,15 @@
       </div>
       <form class="jform" id="nlForm"><input id="nlIn" autocomplete="off" placeholder="Say it your way…" aria-label="Money language input"><button class="btn primary" type="submit" data-hover>Parse</button></form>
       <div class="nl-out" id="nlOut"><span class="mono dim">awaiting input — try a chip above</span></div>
+      <div class="nl-foot">
+        <div class="nlf"><span>envelope</span><b id="nlEnv">—</b></div>
+        <div class="nlf"><span>ledger balance</span><b id="nlBal">KSh 0</b></div>
+      </div>
     </div>
     <div class="lab reveal">
       <h4>Parlons · le drill <span class="lab-no">M/04</span></h4>
       <p>How Simba drills you: one phrase, three options, instant correction. Wrong answers don’t fail you — they teach you.</p>
+      <div class="srs-bar"><span id="srsCount">0 in review queue</span><button class="btn ghost" id="srsReview" data-hover>Review mistakes</button></div>
       <div class="quiz" id="quiz"></div>
     </div>
     <div class="lab span2 reveal">
@@ -417,6 +431,7 @@
         <button data-j="set a timer for 10 minutes" data-hover>timer</button>
       </div>
       <div class="jchat" id="jchat"></div>
+      <div class="jtrace" id="jtrace"><span class="mono dim">router trace — every reply shows which intent fired</span></div>
       <form class="jform" id="jform"><input id="jin" autocomplete="off" placeholder="Talk to Jarvis… (try Sheng, Swahili, French)" aria-label="Jarvis input"><button class="btn primary" type="submit" data-hover>Send</button></form>
     </div>
   </div>

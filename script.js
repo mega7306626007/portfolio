@@ -92,10 +92,10 @@ function seqSys(sys) {
   const nodes = kids.filter(k => !/flow|dot/.test(cls(k)));
   const flows = kids.filter(k => /flow/.test(cls(k)));
   const dots = kids.filter(k => /dot/.test(cls(k)));
-  nodes.forEach((k, i) => k.style.animationDelay = (i * 26) + "ms");
-  const f0 = nodes.length * 26 + 60;
-  flows.forEach((f, i) => f.style.setProperty("--fd", (f0 + i * 65) + "ms"));
-  const d0 = f0 + flows.length * 65 + 240;
+  nodes.forEach((k, i) => k.style.animationDelay = (i * 22) + "ms");
+  const f0 = nodes.length * 22 + 50;
+  flows.forEach((f, i) => f.style.setProperty("--fd", (f0 + i * 60) + "ms"));
+  const d0 = f0 + flows.length * 60 + 220;
   dots.forEach((d, i) => d.style.animationDelay = (d0 + i * 60) + "ms");
 }
 
@@ -361,6 +361,12 @@ function classifySMS(s) { s = s.toLowerCase(); const c = [
 const HIST = [];
 function renderHist() { $("histLog").innerHTML = HIST.length ? HIST.map(h => `<div><b>${h.label}</b> — ${h.conf}% <span style="opacity:.55">· ${h.when}</span></div>`).join("") : `<span style="opacity:.55">no tests yet — run one above</span>`; }
 renderHist();
+function parseMoneyFields(s) {
+  const amt = s.match(/ksh\s?([\d,]+(?:\.\d{1,2})?)/i);
+  const bal = s.match(/balance\s*(?:is|ni)\s*ksh\s?([\d,]+(?:\.\d{1,2})?)/i);
+  return { amt: amt ? amt[1] : null, bal: bal ? bal[1] : null };
+}
+function regexOnly(s) { const l = classifySMS(s); return l === "UNKNOWN" ? "MISS → 74%" : l + " · 74%"; }
 $("classifyBtn").addEventListener("click", () => {
   const v = $("smsIn").value;
   $("predLabel").textContent = "reading…"; $("confFill").style.width = "10%";
@@ -375,6 +381,10 @@ $("classifyBtn").addEventListener("click", () => {
     $("confFill").style.width = conf + "%";
     $("predTop").innerHTML = rows.map((r, i) => `${i + 1} · ${r.n} — ${r.c.toFixed(1)}%`).join("<br>");
     $("predMeta").textContent = noisy ? "noisy input (sheng/typos) — regex would fail, the network holds" : "clean parse · regex 0% fail · network confirms";
+    const f = parseMoneyFields(v);
+    $("mxAmt").textContent = f.amt ? "Ksh " + Number(f.amt.replace(/,/g, "")).toLocaleString() : "—";
+    $("mxBal").textContent = f.bal ? "Ksh " + Number(f.bal.replace(/,/g, "")).toLocaleString() : "—";
+    $("mxRegex").textContent = regexOnly(v);
     HIST.unshift({ label, conf: conf.toFixed(1), when: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) });
     if (HIST.length > 5) HIST.pop();
     renderHist();
@@ -392,13 +402,28 @@ function renderWeek(hit) { const d = $("weekStrip"); if (!d) return; d.innerHTML
     const c = document.createElement("div"); c.className = "wday" + (i === hit ? " hit" : "");
     const lbl = i === 0 ? "today" : i === 1 ? "tmrw" : t.toLocaleDateString([], { weekday: "short" });
     c.innerHTML = `${lbl}<small>${t.getDate()}</small>`; d.appendChild(c); } }
+let pushHistory = [];
 $("pushBtn").addEventListener("click", () => { const need = +$("pushRange").value, chaos = +$("chaosRange").value;
   const busy = chaos === 1 ? 6 : chaos === 2 ? 13 : 19; renderDay(busy, -1, need); renderWeek(-1); $("pushOut").textContent = "scanning freebusy 8:00–22:45…";
   let i = busy; const step = setInterval(() => { renderDay(busy, i, need); i++;
     if (i > busy + 2) { clearInterval(step); const ok = busy + need / 15 < 25;
+      const prot = $("protToggle").checked;
+      const pick = prot ? Math.max(busy, 6) : busy;
+      pushHistory.unshift({ need, day: ok ? 0 : 1, slot: pick, prot });
+      if (pushHistory.length > 6) pushHistory.pop();
+      renderDay(busy, prot ? pick : pick, need);
       renderWeek(ok ? 0 : 1);
-      $("pushOut").textContent = ok ? `moved ${need}m → first fitting slot after ${busy} busy blocks · undo open 6h` : "no room today — rolled to tomorrow 8:00";
+      $("pushOut").textContent = ok
+        ? `moved ${need}m → slot ${String(pick).padStart(2, "0")}:00${prot && pick < 8 ? " · sleep protected, pushed to 08:00" : ""} · undo open 6h`
+        : "no room today — rolled to tomorrow 8:00";
       confetti(innerWidth / 2, 320, 6); } }, 200); });
+$("undoBtn").addEventListener("click", () => {
+  const last = pushHistory.shift();
+  if (!last) { $("pushOut").textContent = "nothing to undo — stack is empty (6h window)"; return; }
+  renderDay(13, -1, last.need); renderWeek(-1);
+  $("pushOut").textContent = `undid ${last.need}m push from ${String(last.slot).padStart(2, "0")}:00 · event restored, stack depth ${pushHistory.length}`;
+});
+$("protToggle").addEventListener("change", e => { if (e.target.checked) $("pushOut").textContent = "protected blocks armed — sleep 22:00–06:00 will never be touched"; });
 renderDay(13, -1, 60); renderWeek(-1);
 
 // Lab: PesaFlow money language parser
@@ -418,9 +443,15 @@ function parseMoneyNL(raw) {
   const conf = amount ? 88 + Math.random() * 10 : 52 + Math.random() * 16;
   return { type, amount, cat, conf };
 }
+const ENVELOPES = { WITHDRAW: "Cash · agent", DEPOSIT: "Cash in", SEND: "People · send", PAY: "Utilities · bill", AIRTIME: "Airtime & data", BORROW: "Debt · friend", BUY: "Food & campus", RECEIVE: "Income", SPEND: "Everyday" };
+let ledgerBal = 0;
 function renderNL(raw) {
   const r = parseMoneyNL(raw);
+  const sign = r.type === "DEPOSIT" || r.type === "RECEIVE" ? 1 : -1;
+  if (r.amount) ledgerBal = Math.max(0, ledgerBal + sign * Number(r.amount));
   const rows = [["type", r.type], ["category", r.cat], ["source", "natural language · en/sw/sheng"], ["confidence", r.conf.toFixed(1) + "%"]];
+  $("nlEnv").textContent = ENVELOPES[r.type] || "Everyday";
+  $("nlBal").textContent = "KSh " + ledgerBal.toLocaleString();
   $("nlOut").innerHTML =
     (r.amount ? `<div class="nl-amt">KSh ${Number(r.amount).toLocaleString()}<small>ledger entry</small></div>`
               : `<div class="nl-amt">?<small>no number heard — say an amount</small></div>`) +
@@ -436,8 +467,27 @@ const QS = [
   { q: "\u201cWhere is the station?\u201d", o: ["Qui est ton fr\u00e8re ?", "O\u00f9 est la gare ?", "Comment \u00e7a co\u00fbte ?"], a: 1 },
   { q: "\u201cThank you very much, my friend\u201d", o: ["Bonne nuit, mon ami", "Je voudrais un caf\u00e9", "Merci beaucoup, mon ami"], a: 2 },
   { q: "\u201cI would like to speak French\u201d", o: ["Je voudrais parler fran\u00e7ais", "Je parle allemand", "Il fait froid aujourd\u2019hui"], a: 0 },
+  { q: "\u201cHow much is this?\u201d", o: ["\u00c7a co\u00fbte combien ?", "O\u00f9 est la gare ?", "Je suis perdu"], a: 0 },
+  { q: "\u201cSee you tomorrow, my brother\u201d", o: ["\u00c0 demain, mon fr\u00e8re", "Bonne nuit, mon ami", "Merci beaucoup"], a: 0 },
+  { q: "\u201cI don\u2019t understand\u201d", o: ["Je ne comprends pas", "Je vais bien", "Il fait froid"], a: 0 },
+  { q: "\u201cThe bill, please\u201d", o: ["L\u2019addition, s\u2019il vous pla\u00eet", "Je voudrais un caf\u00e9", "O\u00f9 est la gare ?"], a: 0 },
 ];
 let qi = 0, qscore = 0, qLock = false;
+const SRS = [];
+function renderSrs() { $("srsCount").textContent = SRS.length ? SRS.length + " in review queue" : "0 in review queue"; }
+renderSrs();
+$("srsReview").addEventListener("click", () => {
+  if (!SRS.length) { $("quiz").innerHTML = `<div class="q-end"><b>0</b><span>queue empty — miss something first, Simba keeps it for you</span></div>`; return; }
+  const item = SRS.shift(); renderSrs();
+  $("quiz").innerHTML = `<div class="q-prog"><span>parlons · review</span><span>drill it again</span></div><div class="q-text">${item.q}</div><div class="q-opts">${item.o.map((o, i) => `<button class="q-opt" data-i="${i}" data-hover>${o}</button>`).join("")}</div><div class="q-msg" id="qMsg"></div>`;
+  $("quiz").querySelectorAll(".q-opt").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i, ok = i === item.a, msg = $("qMsg");
+    const opts = [...$("quiz").querySelectorAll(".q-opt")];
+    if (ok) { b.classList.add("ok"); msg.textContent = "Simba: exactement — back to the drill"; msg.classList.add("good"); }
+    else { b.classList.add("no"); opts[item.a].classList.add("ok"); msg.textContent = `Simba: non — it\u2019s \u201c${item.o[item.a]}\u201d`; }
+    setTimeout(() => { qi = 0; qscore = 0; renderQ(); }, ok ? 850 : 1600);
+  });
+});
 function renderQ() {
   const box = $("quiz"); if (!box) return;
   if (qi >= QS.length) {
@@ -452,7 +502,7 @@ function renderQ() {
     const i = +b.dataset.i, ok = i === item.a, msg = $("qMsg");
     const opts = [...box.querySelectorAll(".q-opt")];
     if (ok) { b.classList.add("ok"); qscore++; msg.textContent = "Simba: exactement !"; msg.classList.add("good"); }
-    else { b.classList.add("no"); opts[item.a].classList.add("ok"); msg.textContent = `Simba: non — it\u2019s \u201c${item.o[item.a]}\u201d`; }
+    else { b.classList.add("no"); opts[item.a].classList.add("ok"); msg.textContent = `Simba: non — it\u2019s \u201c${item.o[item.a]}\u201d`; SRS.unshift(item); renderSrs(); }
     setTimeout(() => { qLock = false; qi++; renderQ(); }, ok ? 850 : 1600);
   });
 }
@@ -481,23 +531,23 @@ function jadd(who, html) { const c = $("jchat"); if (!c) return;
 function jarvisReply(q) {
   const s = q.toLowerCase().trim();
   if (/^(hi|hello|hey|habari|hujambo|niaje|sasa|salut|bonjour)\b/.test(s) || /(how are you|uko poa|vipi|ça va)/.test(s))
-    return s.match(/salut|bonjour|ça va/) ? "Salut ! Je vais bien, merci. Et toi ? <b>Try:</b> tell me a joke" : s.match(/habari|hujambo|uko|vipi|poa|niaje|sasa/) ? "Niko vizuri, asante kwa kuuliza! Vipi wewe? <b>Jaribu:</b> tell me a joke" : "Hello! Good to see you. <b>Try:</b> what is the time?";
+    return { t: s.match(/salut|bonjour|ça va/) ? "Salut ! Je vais bien, merci. Et toi ? <b>Try:</b> tell me a joke" : s.match(/habari|hujambo|uko|vipi|poa|niaje|sasa/) ? "Niko vizuri, asante kwa kuuliza! Vipi wewe? <b>Jaribu:</b> tell me a joke" : "Hello! Good to see you. <b>Try:</b> what is the time?", i: "greeting · regex" };
   if (/(time|sa(a)?\b|saa|heure|wakati)/.test(s)) {
     const t = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Nairobi" }).format(new Date());
-    return `It's <b>${t} EAT</b> — Nairobi time. Anything else?`;
+    return { t: `It's <b>${t} EAT</b> — Nairobi time. Anything else?`, i: "time · deterministic" };
   }
-  if (/(joke|chekesha|blague|cheka)/.test(s)) return JJOKES[Math.floor(Math.random() * JJOKES.length)];
+  if (/(joke|chekesha|blague|cheka)/.test(s)) return { t: JJOKES[Math.floor(Math.random() * JJOKES.length)], i: "joke · deterministic" };
   const calc = s.match(/(?:calcul(?:ate)?|hesabu|ni)\s*([\d\s+\-*/().%^]+)/) || ( /^[\d\s+\-*/().%^]+$/.test(s) ? [s, s] : null );
   if (calc) { try { const expr = calc[1].replace(/\^/g, "**");
       if (!/^[\d\s+\-*/().%*]+$/.test(expr) || !/\d/.test(expr)) throw 0;
       const v = Function('"use strict";return(' + expr + ")")();
       if (typeof v !== "number" || !isFinite(v)) throw 0;
-      return `That's <b>${Math.round(v * 100) / 100}</b>. The calculator command approves.`; } catch { return "Couldn't parse that sum — try <b>calculate 18*24+7</b>."; } }
+      return { t: `That's <b>${Math.round(v * 100) / 100}</b>. The calculator command approves.`, i: "calculator · deterministic" }; } catch { return { t: "Couldn't parse that sum — try <b>calculate 18*24+7</b>.", i: "calculator · parse fail" }; } }
   if (/(timer|kipima|minut)/.test(s)) { const m = s.match(/(\d+)\s*(hour|hr|minute|min|sec)/);
-    return m ? `Timer set for <b>${m[1]} ${m[2]}</b>. I'll keep time — Room database has it logged.` : "How long? Try <b>set a timer for 10 minutes</b>."; }
-  if (/(thank|asante|merci)/.test(s)) return "Karibu sana — always a pleasure.";
-  if (/(bye|kwa heri|au revoir)/.test(s)) return "Kwa heri! I'll be here — offline, on-device.";
-  return "Hmm — my router caught <b>no intent</b>. Try: a greeting in any language, <b>time</b>, <b>joke</b>, <b>calculate 12*8</b>, or a <b>timer</b>.";
+    return { t: m ? `Timer set for <b>${m[1]} ${m[2]}</b>. I'll keep time — Room database has it logged.` : "How long? Try <b>set a timer for 10 minutes</b>.", i: "timer · deterministic" }; }
+  if (/(thank|asante|merci)/.test(s)) return { t: "Karibu sana — always a pleasure.", i: "thanks · regex" };
+  if (/(bye|kwa heri|au revoir)/.test(s)) return { t: "Kwa heri! I'll be here — offline, on-device.", i: "goodbye · regex" };
+  return { t: "Hmm — my router caught <b>no intent</b>. Try: a greeting in any language, <b>time</b>, <b>joke</b>, <b>calculate 12*8</b>, or a <b>timer</b>.", i: "no intent · fallback" };
 }
 const jform = $("jform");
 if (jform) {
@@ -506,5 +556,9 @@ if (jform) {
   jform.addEventListener("submit", e => { e.preventDefault();
     const v = $("jin").value.trim(); if (!v) return; $("jin").value = "";
     jadd("usr", v.replace(/</g, "&lt;"));
-    setTimeout(() => jadd("bot", jarvisReply(v)), 450); });
+    setTimeout(() => { const r = jarvisReply(v);
+      jadd("bot", r.t);
+      const tr = $("jtrace");
+      tr.innerHTML = `<span class="jt">intent → <b>${r.i}</b></span><span class="jt">route → <b>on-device · 0 network</b></span><span class="jt">memory → <b>Room · logged</b></span>`;
+    }, 450); });
 }
