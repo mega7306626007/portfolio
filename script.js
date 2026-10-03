@@ -1,4 +1,4 @@
-const SITE = { email: "lemauelmwesh@gmail.com", email2: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
+const SITE = { email: "lemanelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
 const $ = id => document.getElementById(id);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -266,6 +266,7 @@ const CASES = {
 <p class="cs-end">It's live on Render — <a href="https://pychat-hbih.onrender.com/" target="_blank" rel="noopener">go pick a fight with it</a> (free tier, so give it a minute to wake up) — or skip the queue with the <a href="https://chatbot-web-flame.vercel.app" target="_blank" rel="noopener">instant demo</a>. Source is open: <a href="https://github.com/mega7306626007/chatbot-web" target="_blank" rel="noopener">web face</a> plus the <a href="https://github.com/mega7306626007/chatbot_modules" target="_blank" rel="noopener">engine</a>. Ask it something rude. It has memory.</p>`,
 
 "The Heart v4 — Poetry Experience": `
+<div class="cs-cover"><img src="heart-cover.png" alt="THE HEART poetry anthology cover — a candle glowing through torn paper, wildflowers in front"></div>
 <p class="cs-hook">You type a line of poetry. A neural net finishes the stanza. <em>In your browser.</em> No server reads your verse, no API key, no waiting — just you, a model, and the audacity to rhyme at midnight.</p>
 <h5>The idea</h5>
 <p>Art that thinks back — Mwesh's poetry wired to a small neural continuation model that runs fully client-side. It's a statement as much as a feature: creativity doesn't need permission from a datacenter.</p>
