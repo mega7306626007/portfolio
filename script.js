@@ -568,3 +568,65 @@ if (jform) {
       tr.innerHTML = `<span class="jt">intent → <b>${r.i}</b></span><span class="jt">route → <b>on-device · 0 network</b></span><span class="jt">memory → <b>Room · logged</b></span>`;
     }, 450); });
 }
+
+// Lab: PesaFlow payoff planner (avalanche vs snowball, same engine idea)
+const PDEBTS = [{ name: "HELB", apr: 0.01 }, { name: "M-Shwari", apr: 0.075 }, { name: "Friend", apr: 0 }];
+let strat = "avalanche";
+$("extraRange").addEventListener("input", e => $("extraVal").textContent = Number(e.target.value).toLocaleString());
+$("stratA").addEventListener("click", () => { strat = "avalanche"; $("stratA").classList.add("on"); $("stratS").classList.remove("on"); });
+$("stratS").addEventListener("click", () => { strat = "snowball"; $("stratS").classList.add("on"); $("stratA").classList.remove("on"); });
+$("payoffBtn").addEventListener("click", () => {
+  const bals = PDEBTS.map((d, i) => Math.max(0, +$("debt" + i).value || 0));
+  const extra = +$("extraRange").value;
+  const total0 = bals.reduce((a, b) => a + b, 0);
+  if (!total0) { $("payoffOut").innerHTML = `<span class="mono dim">no debt — must be nice</span>`; return; }
+  const order = bals.map((b, i) => i).sort((a, b) => strat === "avalanche" ? PDEBTS[b].apr - PDEBTS[a].apr : bals[a] - bals[b]);
+  const left = [...bals], done = {};
+  let m = 0, interest = 0;
+  while (left.some(b => b > 0.01) && m < 600) {
+    m++;
+    let budget = extra;
+    order.forEach(i => {
+      if (left[i] <= 0.01) return;
+      const intr = left[i] * PDEBTS[i].apr; interest += intr; left[i] += intr;
+      const min = Math.min(left[i], Math.max(100, left[i] * 0.05));
+      left[i] -= min;
+      if (left[i] < 0.01) { left[i] = 0; done[i] = m; }
+    });
+    for (const i of order) {
+      if (budget <= 0) break;
+      if (left[i] <= 0.01) continue;
+      const pay = Math.min(left[i], budget); left[i] -= pay; budget -= pay;
+      if (left[i] < 0.01) { left[i] = 0; done[i] = m; }
+    }
+  }
+  const maxB = Math.max(...bals, 1);
+  $("payoffOut").innerHTML =
+    `<div class="nl-amt">${m}<small>months to free · KSh ${Math.round(interest).toLocaleString()} interest</small></div>` +
+    order.map((i, k) => `<div class="nlrow" style="animation-delay:${(.15 + k * .1).toFixed(2)}s"><span>#${k + 1} ${PDEBTS[i].name}</span><b>month ${done[i] || m}</b></div><div class="paybar"><i data-w="${Math.round(bals[i] / maxB * 100)}"></i></div>`).join("");
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll("#payoffOut .paybar i").forEach(el => el.style.width = el.dataset.w + "%");
+  }));
+  confetti(innerWidth / 2, 420, 6);
+});
+
+// Lab: The Heart writes back (Markov miniature of the v4 continuation idea)
+const VERSES = ["the city hums before the matatus wake", "rain on mabati sings the night awake", "my mother counted stars like loose change", "nairobi keeps my name in its pocket", "the quiet between power cuts is prayer", "we borrow light from a passing boda", "ugali steam writes letters to the ceiling", "midnight asks nothing but company", "the river road drums never sleep", "i carry home in an old paper bag", "sheng on the corner tastes like sunrise", "her laugh fixed what the day broke", "electricity returns like a shy lover", "the moon audits every dark alley", "we plant hopes between the potholes", "silence here has a heartbeat", "my grandfather's stories outlive the signal", "the balcony knows all my secrets", "dawn arrives without knocking", "love in this town pays in attention", "the kettle whistles our evening anthem", "stars over kibera spell remember", "i write so the night listens", "morning tea forgives yesterday"];
+const CHAIN = {};
+VERSES.forEach(v => { const w = v.split(" "); for (let i = 0; i < w.length - 2; i++) { const k = w[i] + " " + w[i + 1]; (CHAIN[k] = CHAIN[k] || []).push(w[i + 2]); } });
+const KEYS = Object.keys(CHAIN);
+function continueVerse(seed) {
+  const sw = seed.toLowerCase().replace(/[^a-z\s]/g, "").split(/\s+/).filter(Boolean);
+  let pair = sw.length >= 2 && CHAIN[sw.slice(-2).join(" ")] ? sw.slice(-2) : KEYS[Math.floor(Math.random() * KEYS.length)].split(" ");
+  const out = [...pair];
+  for (let i = 0; i < 12; i++) { const next = CHAIN[pair.join(" ")]; if (!next) break; const w = next[Math.floor(Math.random() * next.length)]; out.push(w); pair = [pair[1], w]; }
+  const mid = 4 + Math.floor(Math.random() * Math.max(1, out.length - 6));
+  return [out.slice(0, mid).join(" "), out.slice(mid).join(" ")].filter(Boolean);
+}
+$("verseForm").addEventListener("submit", e => { e.preventDefault();
+  const v = $("verseIn").value.trim(); if (!v) return; $("verseIn").value = "";
+  const lines = continueVerse(v);
+  $("verseOut").innerHTML = `<span class="v-you">you wrote — the Heart continues</span>` +
+    `<span class="v-line">“${v.replace(/</g, "&lt;")}”</span>` +
+    lines.map(l => `<span class="v-line">${l}</span>`).join("");
+});

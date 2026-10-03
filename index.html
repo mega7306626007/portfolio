@@ -359,7 +359,7 @@
 <section class="section" id="lab" style="padding-top:0">
   <div class="sec-no reveal">03 — The lab</div>
   <h2 class="reveal">Go on, poke <em>around.</em></h2>
-  <p class="sec-sub reveal">Five pieces of the real apps, running right here in your browser. Break them if you can.</p>
+  <p class="sec-sub reveal">Seven pieces of the real apps, running right here in your browser. Break them if you can.</p>
   <div class="lab-grid">
     <div class="lab reveal">
       <h4>M-PESA classifier <span class="lab-no">M/01</span></h4>
@@ -444,6 +444,29 @@
       <div class="jchat" id="jchat"></div>
       <div class="jtrace" id="jtrace"><span class="mono dim">router trace — every reply shows which intent fired</span></div>
       <form class="jform" id="jform"><input id="jin" autocomplete="off" placeholder="Talk to Jarvis… (try Sheng, Swahili, French)" aria-label="Jarvis input"><button class="btn primary" type="submit" data-hover>Send</button></form>
+    </div>
+    <div class="lab reveal">
+      <h4>Payoff planner <span class="lab-no">M/06</span></h4>
+      <p>PesaFlow's debt engine: avalanche vs snowball on real-ish campus debts. Set balances, pick a strategy, watch the interest die.</p>
+      <div class="debts">
+        <div class="debt"><span>HELB · 1%/mo</span><input id="debt0" type="number" value="18000" min="0" aria-label="HELB balance"></div>
+        <div class="debt"><span>M-Shwari · 7.5%/mo</span><input id="debt1" type="number" value="6500" min="0" aria-label="M-Shwari balance"></div>
+        <div class="debt"><span>Friend · 0%</span><input id="debt2" type="number" value="2000" min="0" aria-label="Friend balance"></div>
+      </div>
+      <label>Extra monthly · <b id="extraVal">1000</b> KSh</label>
+      <input type="range" id="extraRange" min="0" max="10000" step="250" value="1000">
+      <div class="samples">
+        <button id="stratA" class="on" data-hover>Avalanche · highest rate first</button>
+        <button id="stratS" data-hover>Snowball · smallest first</button>
+      </div>
+      <button class="btn primary" id="payoffBtn" data-hover>Run payoff</button>
+      <div class="nl-out" id="payoffOut"><span class="mono dim">awaiting input — avalanche usually wins, snowball feels better</span></div>
+    </div>
+    <div class="lab reveal">
+      <h4>The Heart writes back <span class="lab-no">M/07</span></h4>
+      <p>A miniature of the v4 poetry engine: you write one honest line, a chain trained on Nairobi nights continues it. The real one is neural — this one is honest maths.</p>
+      <form class="jform" id="verseForm"><input id="verseIn" autocomplete="off" placeholder="Type one honest line…" aria-label="Poetry input"><button class="btn primary" type="submit" data-hover>Continue</button></form>
+      <div class="nl-out verse-out" id="verseOut"><span class="mono dim">the page is blank — start it</span></div>
     </div>
   </div>
 

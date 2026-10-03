@@ -346,6 +346,19 @@ input[type=range] { width: 100%; accent-color: var(--accent); margin: 6px 0 16px
 .nlf { display: flex; flex-direction: column; gap: 2px; }
 .nlf span { font-family: var(--font-m); font-size: 8.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
 .nlf b { font-family: var(--font-m); font-size: 11px; color: var(--accent-ink); font-weight: 500; }
+.debts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 16px; }
+@media (max-width: 560px) { .debts { grid-template-columns: 1fr; } }
+.debt { display: flex; flex-direction: column; gap: 6px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px; }
+.debt span { font-family: var(--font-m); font-size: 9px; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+.debt input { width: 100%; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; font-family: var(--font-m); font-size: 13px; color: var(--ink); outline: none; }
+.debt input:focus { border-color: var(--accent); }
+.samples button.on { border-color: var(--accent); color: var(--accent-ink); background: rgba(154,63,22,.07); }
+.paybar { height: 5px; background: rgba(28,24,17,.1); border-radius: 3px; overflow: hidden; margin: 4px 0 10px; }
+.paybar i { display: block; height: 100%; width: 0; background: var(--moss); border-radius: 3px; transition: width .9s var(--ease); }
+.verse-out { font-family: var(--font-s); font-size: 19px; line-height: 1.6; font-style: italic; color: var(--ink); }
+.verse-out .v-you { display: block; font-family: var(--font-m); font-style: normal; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-bottom: 8px; }
+.verse-out .v-line { display: block; opacity: 0; transform: translateY(6px); animation: rowIn .5s var(--ease) forwards; }
+.verse-out .v-line:nth-child(3) { animation-delay: .18s; }
 .srs-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
 .srs-bar span { font-family: var(--font-m); font-size: 10px; color: var(--faint); letter-spacing: .06em; }
 .jtrace { margin-top: 12px; border: 1px dashed var(--line); border-radius: 8px; padding: 10px 14px; font-family: var(--font-m); font-size: 10px; line-height: 1.8; color: var(--muted); min-height: 58px; }
