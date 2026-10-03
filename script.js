@@ -151,7 +151,8 @@ for (let i = 0; i < 40; i++) pts.push({ x: Math.random() * innerWidth, y: Math.r
     ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill(); }); })();
 
 document.querySelectorAll(".f").forEach(btn => btn.addEventListener("click", () => {
-  document.querySelectorAll(".f").forEach(b => b.classList.remove("active")); btn.classList.add("active");
+  document.querySelectorAll(".f").forEach(b => { b.classList.remove("active"); b.setAttribute("aria-pressed", "false"); });
+  btn.classList.add("active"); btn.setAttribute("aria-pressed", "true");
   const f = btn.dataset.filter;
   const cards = [...document.querySelectorAll("#projectGrid .proj")];
   let vis = 0;
@@ -316,8 +317,13 @@ $("termForm").addEventListener("submit", e => { e.preventDefault(); const raw = 
   else if (c === "joke") print(raw, JOKES[Math.floor(Math.random() * JOKES.length)]);
   else print(raw, "try: help"); });
 
-$("menuBtn").addEventListener("click", () => $("mobileMenu").classList.toggle("open"));
-document.querySelectorAll("#mobileMenu a").forEach(a => a.addEventListener("click", () => $("mobileMenu").classList.remove("open")));
+function setMobileMenu(open) {
+  $("mobileMenu").classList.toggle("open", open);
+  $("menuBtn").setAttribute("aria-expanded", String(open));
+  $("menuBtn").setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+}
+$("menuBtn").addEventListener("click", () => setMobileMenu(!$("mobileMenu").classList.contains("open")));
+document.querySelectorAll("#mobileMenu a").forEach(a => a.addEventListener("click", () => setMobileMenu(false)));
 
 $("copyEmail").addEventListener("click", async () => { try { await navigator.clipboard.writeText(SITE.email); toast("email copied"); } catch { toast(SITE.email); } });
 
@@ -334,7 +340,7 @@ function renderPal(q = "") { palList.innerHTML = ""; cmds.filter(c => c.n.toLowe
   d.onclick = () => { palette.classList.remove("open"); c.fn(); }; palList.appendChild(d); }); }
 addEventListener("keydown", e => { if (e.key.toLowerCase() === "k" && !/input|textarea/i.test(document.activeElement.tagName)) {
   palette.classList.toggle("open"); renderPal(); palInput.value = ""; setTimeout(() => palInput.focus(), 30); }
-  if (e.key === "Escape") { closeModal(); palette.classList.remove("open"); } });
+  if (e.key === "Escape") { closeModal(); palette.classList.remove("open"); setMobileMenu(false); } });
 palInput.addEventListener("input", () => renderPal(palInput.value));
 palInput.addEventListener("keydown", e => { if (e.key === "Enter") { const f = palList.querySelector("div"); f && f.click(); } });
 

@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<base href="https://mega7306626007.github.io/portfolio/">
 <title>Emmanuel · Mweshimiwa Enterprises — Software, Nairobi</title>
 <meta name="description" content="Mweshimiwa Enterprises — Emmanuel, Nairobi. On-device AI, offline-first mobile, honest fintech. Jarvis, PesaFlow, M-PESA Neural Engine, Parlons.">
+<meta name="theme-color" content="#eee7d5">
 <meta property="og:title" content="Emmanuel · Mweshimiwa Enterprises">
 <meta property="og:description" content="Software that respects the people who use it. AI · fintech · mobile from Nairobi.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://mega7306626007.github.io/portfolio/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
 <noscript><style>.reveal{opacity:1;transform:none}#loader{display:none}.hero-badges .chip{opacity:1;transform:none}main .sec-no::before{transform:none}.proof .p b::after,.proof .p:not(:first-child)::before{transform:none}.principles li{opacity:1;transform:none}</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#top">Skip to content</a>
 <div class="progress" id="progress"></div>
 <canvas id="particles" aria-hidden="true"></canvas>
 <div class="grain" aria-hidden="true"></div>
@@ -43,11 +45,11 @@
     <a href="#about" data-hover>About</a>
     <a href="#contact" class="nav-cta" data-hover>Contact</a>
   </nav>
-  <button class="nav-menu" id="menuBtn" aria-label="Menu">≡</button>
+  <button class="nav-menu" id="menuBtn" aria-label="Open navigation menu" aria-controls="mobileMenu" aria-expanded="false">≡</button>
 </header>
-<div class="mobile-menu" id="mobileMenu">
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
   <a href="#work">Work</a><a href="#systems">Systems</a><a href="#lab">Lab</a><a href="#about">About</a><a href="#contact">Contact</a>
-</div>
+</nav>
 
 <main id="top">
 <section class="hero">
@@ -102,17 +104,19 @@
   <div class="sec-head reveal">
     <div>
       <div class="sec-no">01 — Selected work</div>
-      <h2>Stuff I've actually <em>shipped.</em></h2>
+      <h2>Built for real life.<br><em>Shipped for real.</em></h2>
+      <p class="work-intro">A small studio, a practical question, and the care to take an idea all the way to working software.</p>
     </div>
-    <div class="filters" role="tablist">
-      <button class="f active" data-filter="all" data-hover>All</button>
-      <button class="f" data-filter="ai" data-hover>AI/ML</button>
-      <button class="f" data-filter="mobile" data-hover>Mobile</button>
-      <button class="f" data-filter="web" data-hover>Web</button>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button class="f active" data-filter="all" aria-pressed="true" data-hover>All</button>
+      <button class="f" data-filter="ai" aria-pressed="false" data-hover>AI/ML</button>
+      <button class="f" data-filter="mobile" aria-pressed="false" data-hover>Mobile</button>
+      <button class="f" data-filter="web" aria-pressed="false" data-hover>Web</button>
     </div>
   </div>
   <div id="projectGrid">
     <article class="proj reveal" data-tags="ai mobile" data-hover data-title="Jarvis (Mwesh) — Voice Assistant" data-body="Android voice assistant (Kotlin + Compose). On-device ONNX inference, Room memory (alarms, notes, reminders, conversations), command router (time, calculator, jokes, timers), speech recognition + TTS, translator, EN/SW/FR corpus. 80+ source files, 100+ tests. Training corpus (863MB, multilingual) kept local.">
+      <div class="proj-art art-jarvis" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#1b211b"/><circle cx="488" cy="122" r="102" fill="#2d392c"/><circle cx="488" cy="122" r="72" fill="none" stroke="#758568" stroke-opacity=".32"/><circle cx="488" cy="122" r="47" fill="none" stroke="#758568" stroke-opacity=".45"/><circle cx="488" cy="122" r="23" fill="#d5a95b"/><path d="M320 122h22l10-28 18 56 17-42 13 25h18" fill="none" stroke="#e9d9b7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="32" y="34" width="238" height="172" rx="15" fill="#f3eddf"/><circle cx="54" cy="56" r="4" fill="#738268"/><text x="69" y="60" fill="#65705d" font-size="10" font-family="monospace" letter-spacing="2">MWESH · LISTENING</text><text x="54" y="108" fill="#25291f" font-size="23" font-family="Georgia">Habari, Emmanuel.</text><text x="54" y="134" fill="#74756b" font-size="12" font-family="monospace">Your day is ready.</text><path d="M54 166h34m12 0h9m11 0h46m10 0h13m10 0h28" stroke="#9b5732" stroke-width="3" stroke-linecap="round"/></svg><span>01 / VOICE · ON DEVICE</span></div>
       <span class="proj-num">01</span>
       <div>
         <h3>Jarvis <em>· Mwesh</em></h3>
@@ -126,6 +130,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="ai mobile" data-hover data-title="PesaFlow — Student Finance" data-body="KES-only student finance app (134+ Kotlin files, verified debug build). 7 transaction sources: manual entry, M-Pesa SMS parser (10+ formats), natural-language parser (Kenyan English/Swahili/Sheng), share-to-app, on-device OCR receipts, CSV import with dedupe. Budgets, debt-payoff planner, investment simulator, analytics.">
+      <div class="proj-art art-pesa" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#e2e7d4"/><path d="M0 210Q148 154 297 207t303-8v41H0z" fill="#d3ddc5"/><rect x="40" y="30" width="330" height="180" rx="15" fill="#faf8f0"/><text x="64" y="62" fill="#777c69" font-size="11" font-family="monospace" letter-spacing="2">THIS MONTH · KES</text><text x="64" y="105" fill="#28382a" font-size="36" font-family="Georgia">12,480</text><text x="64" y="129" fill="#75846f" font-size="11" font-family="monospace">AVAILABLE TO SPEND</text><rect x="64" y="153" width="250" height="7" rx="4" fill="#e7e8dd"/><rect x="64" y="153" width="158" height="7" rx="4" fill="#718364"/><rect x="64" y="179" width="12" height="12" rx="4" fill="#c4784e"/><text x="84" y="189" fill="#565c4e" font-size="11" font-family="monospace">Food · 68% of envelope</text><circle cx="468" cy="119" r="65" fill="none" stroke="#c7d0ba" stroke-width="17"/><path d="M468 54a65 65 0 0 1 58 94" fill="none" stroke="#718364" stroke-width="17" stroke-linecap="round"/><text x="468" y="116" text-anchor="middle" fill="#344333" font-size="19" font-family="Georgia">68%</text><text x="468" y="137" text-anchor="middle" fill="#777c69" font-size="9" font-family="monospace">BUDGET</text></svg><span>02 / MONEY · YOUR RULES</span></div>
       <span class="proj-num">02</span>
       <div>
         <h3>PesaFlow</h3>
@@ -139,6 +144,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="ai" data-hover data-title="SMS Engine · M-PESA Neural" data-body="Python engine over 5,000+ SMS across 29 M-PESA product types (Fuliza, M-Shwari, KCB, Okoa, Pochi, Ziidi, Hustler, Lipa Mdogo). Regex parser at 0% fail rate, pattern/probability layer, finance intelligence (income vs credit gap, runway, Okoa-dependence), and a 4.31M-parameter neural classifier (100k msgs, 35% noise-augmented), macro-F1 1.0, 100% on the noisy gauntlet vs 74% regex. Exported to ONNX for on-device Android.">
+      <div class="proj-art art-sms" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#171916"/><path d="M0 201H600M0 168H600M0 135H600M0 102H600M0 69H600M0 36H600M70 0v240m50-240v240m50-240v240m50-240v240m50-240v240m50-240v240m50-240v240m50-240v240m50-240v240" stroke="#afbd9a" stroke-opacity=".08"/><rect x="36" y="33" width="291" height="173" rx="12" fill="#242821" stroke="#495044"/><text x="58" y="62" fill="#b8c493" font-size="10" font-family="monospace" letter-spacing="2">INCOMING · NOISY SMS</text><text x="58" y="99" fill="#e5e3d8" font-size="16" font-family="monospace">Qx9 sent 500 to john</text><text x="58" y="124" fill="#dbad62" font-size="16" font-family="monospace">latr plz · new bal 300</text><path d="M58 153h34l10-12 12 24 11-16 10 4h41" fill="none" stroke="#a9ba88" stroke-width="2"/><path d="M354 119h76" stroke="#c69b57" stroke-dasharray="4 6"/><path d="m424 112 10 7-10 7" fill="none" stroke="#c69b57"/><circle cx="510" cy="112" r="52" fill="#252d23" stroke="#a9ba88" stroke-width="2"/><text x="510" y="108" text-anchor="middle" fill="#dce7c4" font-size="27" font-family="Georgia">100%</text><text x="510" y="130" text-anchor="middle" fill="#a9ba88" font-size="9" font-family="monospace">NOISY ACC.</text><text x="360" y="190" fill="#858b7c" font-size="10" font-family="monospace">TYPOS IN · SIGNAL OUT</text></svg><span>03 / M-PESA · NOISY DATA</span></div>
       <span class="proj-num">03</span>
       <div>
         <h3>SMS Engine <em>· M-PESA Neural</em></h3>
@@ -151,6 +157,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="ai web mobile" data-hover data-title="Calendar Rescheduler" data-body="Apps Script + Calendar API v3 + Android WebView wrapper. Push-to-next-free-slot, class-cancelled overfill queue, 6h undo stack, freebusy-aware search 8:00–22:45, protected-block guardrails. Day/Week/Month views, installable PWA + native APK. Runs my own life daily — v16 shipped.">
+      <div class="proj-art art-calendar" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#dfe5e7"/><circle cx="500" cy="18" r="105" fill="#cfdadd"/><rect x="54" y="28" width="375" height="184" rx="14" fill="#faf8f0"/><text x="78" y="58" fill="#525e62" font-size="12" font-family="monospace" letter-spacing="2">TUESDAY · 14 OCT</text><path d="M78 73h327" stroke="#e1e3dd"/><g fill="#9a9b92" font-family="monospace" font-size="10" text-anchor="middle"><text x="105" y="94">09</text><text x="172" y="94">10</text><text x="239" y="94">11</text><text x="306" y="94">12</text><text x="373" y="94">13</text></g><g stroke="#e8e6de"><path d="M78 102h327M78 137h327M78 172h327"/><path d="M139 83v110m67-110v110m67-110v110m67-110v110"/></g><rect x="145" y="108" width="55" height="24" rx="5" fill="#dbe3d5"/><rect x="212" y="143" width="122" height="24" rx="5" fill="#9b5732"/><text x="224" y="159" fill="#fff5e6" font-family="monospace" font-size="9">FOCUS · protected</text><rect x="369" y="101" width="188" height="84" rx="12" fill="#34464b"/><text x="389" y="128" fill="#bdc9c4" font-size="10" font-family="monospace" letter-spacing="1">NEXT OPEN SLOT</text><text x="389" y="157" fill="#f2e7cf" font-size="22" font-family="Georgia">11:30 AM</text><text x="389" y="174" fill="#a9b8af" font-size="9" font-family="monospace">Undo always available</text></svg><span>04 / TIME · WITH GUARDRAILS</span></div>
       <span class="proj-num">04</span>
       <div>
         <h3>Calendar Rescheduler</h3>
@@ -164,6 +171,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="ai" data-hover data-title="Transcriber — Kiswahili Voice" data-body="Local audio transcriber with synced player, SRT editor, Kiswahili language support, and a Whisper fine-tuning pipeline. Long audio in, timestamped knowledge out — lectures, sermons, interviews.">
+      <div class="proj-art art-transcriber" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#24201c"/><circle cx="524" cy="15" r="115" fill="#342b25"/><text x="38" y="49" fill="#c0a587" font-size="10" font-family="monospace" letter-spacing="2">FIELD RECORDING · NAIROBI</text><text x="38" y="84" fill="#f0e6d7" font-size="23" font-family="Georgia">Interview_07.wav</text><g fill="#bd845c"><rect x="40" y="116" width="5" height="24" rx="3"/><rect x="53" y="106" width="5" height="43" rx="3"/><rect x="66" y="94" width="5" height="67" rx="3"/><rect x="79" y="110" width="5" height="36" rx="3"/><rect x="92" y="99" width="5" height="57" rx="3"/><rect x="105" y="87" width="5" height="80" rx="3"/><rect x="118" y="104" width="5" height="46" rx="3"/><rect x="131" y="113" width="5" height="27" rx="3"/><rect x="144" y="96" width="5" height="62" rx="3"/><rect x="157" y="105" width="5" height="43" rx="3"/><rect x="170" y="91" width="5" height="71" rx="3"/><rect x="183" y="115" width="5" height="24" rx="3"/><rect x="196" y="101" width="5" height="52" rx="3"/><rect x="209" y="93" width="5" height="68" rx="3"/><rect x="222" y="108" width="5" height="39" rx="3"/><rect x="235" y="99" width="5" height="57" rx="3"/><rect x="248" y="113" width="5" height="29" rx="3"/><rect x="261" y="96" width="5" height="63" rx="3"/><rect x="274" y="106" width="5" height="42" rx="3"/><rect x="287" y="90" width="5" height="72" rx="3"/></g><circle cx="353" cy="128" r="19" fill="#b77a51"/><path d="m349 117 14 11-14 11z" fill="#fff1df"/><text x="387" y="124" fill="#e8d7c4" font-size="13" font-family="monospace">00:42 / 12:08</text><path d="M38 187h519" stroke="#5a5148"/><text x="40" y="211" fill="#b4a391" font-size="12" font-family="Georgia">“Tunaweza kuanza na...”</text><text x="520" y="211" fill="#c28e66" font-size="9" font-family="monospace">SW · SRT</text></svg><span>05 / AUDIO · KISWAHILI</span></div>
       <span class="proj-num">05</span>
       <div>
         <h3>Transcriber</h3>
@@ -177,6 +185,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="ai web" data-hover data-title="PyChat — Advanced Offline Chatbot" data-body="The advanced chatbot stack: modular offline Python engine with memory, intent routing, neural nets and an optional LLM hybrid. Deployed on Render.">
+      <div class="proj-art art-pychat" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#e8e3d5"/><path d="M0 188Q160 128 290 195t310-5v50H0z" fill="#ddd7c7"/><rect x="37" y="32" width="525" height="176" rx="16" fill="#262b24"/><text x="62" y="61" fill="#b8c294" font-size="10" font-family="monospace" letter-spacing="2">PYCHAT · LOCAL SESSION</text><rect x="62" y="81" width="270" height="40" rx="10" fill="#3a4236"/><text x="80" y="106" fill="#e4e5d8" font-size="13" font-family="Georgia">Can you help me plan my week?</text><rect x="270" y="135" width="263" height="47" rx="10" fill="#dce2c9"/><text x="288" y="155" fill="#30392d" font-size="12" font-family="Georgia">Of course. What matters most</text><text x="288" y="171" fill="#30392d" font-size="12" font-family="Georgia">to you this week?</text><circle cx="77" cy="61" r="3" fill="#d5a95b"/><path d="M382 100h1m14 0h1m14 0h1" stroke="#a9ba88" stroke-width="5" stroke-linecap="round"/><text x="62" y="196" fill="#939989" font-size="9" font-family="monospace">MEMORY ON · ROUTER READY</text></svg><span>06 / CONVERSATION · MODULAR</span></div>
       <span class="proj-num">06</span>
       <div>
         <h3>PyChat</h3>
@@ -185,11 +194,12 @@
         <div class="row-links"><a href="https://github.com/mega7306626007/pychat" target="_blank" rel="noopener" data-hover>Repo →</a><a href="https://pychat-hbih.onrender.com/" target="_blank" rel="noopener" data-hover>Live ↗</a></div>
       </div>
       <div class="proj-side">
-        <div class="proj-metric">Live<small>vercel demo</small></div>
+        <div class="proj-metric">Live<small>render demo</small></div>
         <button class="proj-link open-modal" data-hover>Case study →</button>
       </div>
     </article>
     <article class="proj reveal" data-tags="web" data-hover data-title="The Heart v4 — Poetry Experience" data-body="The Heart v4 — Mwesh poetry web experience with in-browser neural continuation. Art that thinks back, entirely client-side. Live on Vercel.">
+      <div class="proj-art art-heart" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#e6d7d1"/><circle cx="462" cy="124" r="138" fill="#d8c1b7"/><circle cx="462" cy="124" r="98" fill="none" stroke="#a45a45" stroke-opacity=".25"/><circle cx="462" cy="124" r="65" fill="none" stroke="#a45a45" stroke-opacity=".32"/><path d="M380 124c-22-34-65 0 0 54 65-54 22-88 0-54Z" fill="none" stroke="#a45a45" stroke-width="2"/><circle cx="380" cy="124" r="4" fill="#a45a45"/><text x="48" y="57" fill="#995541" font-size="10" font-family="monospace" letter-spacing="2">THE HEART · V4</text><text x="48" y="112" fill="#382923" font-size="30" font-family="Georgia" font-style="italic">What if the quiet</text><text x="48" y="149" fill="#382923" font-size="30" font-family="Georgia" font-style="italic">was listening?</text><path d="M50 174h40m10 0h6m11 0h29m10 0h7m10 0h62" stroke="#a45a45" stroke-width="1.5" stroke-linecap="round"/><text x="48" y="202" fill="#806d64" font-size="9" font-family="monospace">A POEM THAT WRITES BACK · IN YOUR BROWSER</text></svg><span>07 / POETRY · IN THE BROWSER</span></div>
       <span class="proj-num">07</span>
       <div>
         <h3>The Heart <em>v4</em></h3>
@@ -203,6 +213,7 @@
       </div>
     </article>
     <article class="proj reveal" data-tags="mobile" data-hover data-title="Parlons — French for Kenyans" data-body="Offline-first French for Kenyans (EN/SW/Sheng). 65 lessons, Simba chat partner, spaced repetition, Vosk offline speech models, novels and poems in French, zero accounts, zero API keys.">
+      <div class="proj-art art-parlons" aria-hidden="true"><svg viewBox="0 0 600 240"><rect width="600" height="240" fill="#dce5e5"/><circle cx="518" cy="32" r="112" fill="#c8d9d8"/><rect x="42" y="31" width="330" height="179" rx="15" fill="#faf8f0"/><text x="65" y="59" fill="#758989" font-size="10" font-family="monospace" letter-spacing="2">LEÇON 12 · LES SALUTATIONS</text><text x="65" y="111" fill="#293c3d" font-size="35" font-family="Georgia">Bonjour !</text><text x="66" y="137" fill="#718081" font-size="12" font-family="Georgia" font-style="italic">Hello · Habari · Sasa</text><rect x="64" y="157" width="252" height="31" rx="8" fill="#e8efeb"/><text x="80" y="177" fill="#546962" font-size="10" font-family="monospace">▶ Écouter · Repeat after me</text><circle cx="458" cy="122" r="62" fill="#e9eee6"/><circle cx="458" cy="101" r="23" fill="#d39a71"/><path d="M414 162q6-37 44-37t44 37" fill="#71877b"/><path d="M420 170q38 13 76 0" fill="none" stroke="#a7b5a9"/><text x="458" y="202" text-anchor="middle" fill="#526962" font-size="9" font-family="monospace">SIMBA · OFFLINE</text></svg><span>08 / FRENCH · BUILT FOR HERE</span></div>
       <span class="proj-num">08</span>
       <div>
         <h3>Parlons</h3>

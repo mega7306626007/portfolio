@@ -24,8 +24,6 @@ python -m http.server 8000
 
 Already wired to **GitHub Pages**: push to `main` and it goes live (via `.github/workflows/pages.yml`), or set **Settings → Pages → Deploy from branch → `main` / root**.
 
-> `index.html` carries a `<base href>` pointing at the project URL (`…github.io/portfolio/`). If you fork this as a user site or under a different name, update or remove that tag.
-
 ## Files
 
 - `index.html` — all content (sections, project rows, lab panels)
