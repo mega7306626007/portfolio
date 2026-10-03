@@ -176,8 +176,8 @@ document.querySelectorAll(".f").forEach(btn => btn.addEventListener("click", () 
 }));
 
 const CASES = {
-"Jarvis (Mwesh) — Voice Assistant": `
-<p class="cs-hook">Every other assistant wants your email, your cloud, and your prayers for the Wi-Fi to hold. Jarvis wants none of it. Meet Mwesh — a butler that lives <em>inside</em> your phone.</p>
+"Mweshimiwa — Voice Assistant": `
+<p class="cs-hook">Every other assistant wants your email, your cloud, and your prayers for the Wi-Fi to hold. Mweshimiwa wants none of it. Meet Mweshimiwa — a butler that lives <em>inside</em> your phone.</p>
 <h5>The brief</h5>
 <p>Build a voice assistant for a Nairobi reality: cheap data, patchy signal, and a phone that's got better things to do than stream your voice to a server farm.</p>
 <h5>What's actually under the hood</h5>
@@ -186,7 +186,7 @@ const CASES = {
 <li><b>Room-backed memory</b> — alarms, notes, reminders, full conversations, all queryable, all yours.</li>
 <li><b>Command router</b> — time, calculator, jokes, timers: deterministic first, neural where it counts.</li>
 <li><b>Speech + TTS</b> — hears you, answers out loud, in a voice you can live with.</li>
-<li><b>Trilingual corpus</b> — English, Kiswahili, French. 80+ source files, 100+ tests.</li>
+<li><b>Trilingual corpus</b> — English, Kiswahili, French. 80+ source files, 100+ tests.</li><li><b>Own LLM from scratch</b> — 1.6M params, 23k pairs, loss 2.0, on-device top-k.</li>
 </ul>
 <div class="cs-stats"><span><b>80+</b>source files</span><span><b>100+</b>tests</span><span><b>EN·SW·FR</b>languages</span><span><b>0</b>cloud calls</span></div>
 <p class="cs-end">It's currently tied to my wrist-level daily use and the full build is on <a href="https://github.com/mega7306626007/mwesh" target="_blank" rel="noopener">GitHub</a>. Clone it. Wake it up. <b>It doesn't need your password to impress you.</b></p>`,
@@ -311,7 +311,7 @@ $("termForm").addEventListener("submit", e => { e.preventDefault(); const raw = 
   if (c === "help") print(raw, "help · whoami · projects · hire · joke · company · github");
   else if (c === "whoami") print(raw, "emmanuel @ mweshimiwa enterprises — nairobi systems builder");
   else if (c === "company") print(raw, "Mweshimiwa Enterprises · AI · Android · Web · reply <48h · " + SITE.email);
-  else if (c === "projects") print(raw, "jarvis/ pesaflow/ parlons/ transcriber/ pychat/ the-heart — see work");
+  else if (c === "projects") print(raw, "mweshimiwa/ pesaflow/ parlons/ transcriber/ pychat/ the-heart — see work");
   else if (c === "hire") { print(raw, "opening email — let's scope it"); location.hash = "#contact"; }
   else if (c === "github") { print(raw, "opening github"); open(SITE.github, "_blank"); }
   else if (c === "joke") print(raw, JOKES[Math.floor(Math.random() * JOKES.length)]);
@@ -525,16 +525,16 @@ fetch(SITE.api).then(r => r.json()).then(all => {
   $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a>${r.homepage && !r.homepage.includes("mega7306626007.github.io/portfolio") ? `<a href="${r.homepage}" target="_blank" rel="noopener">Live ↗</a>` : ""}</div>`).join("");
   revealGh();
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
-  $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`;
+  $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Mweshimiwa voice assistant + own 1.6M LLM — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`;
   revealGh(); });
 
-// Lab: Jarvis intent router (mirrors the on-device CommandRouter)
+// Lab: Mweshimiwa intent router (mirrors the on-device CommandRouter)
 const JJOKES = ["Why do programmers prefer dark mode? Because light attracts bugs.", "Niko na PhD kwa kuchelewa — lakini leo nimefika mapema.", "Pourquoi les plongeurs plongent-ils toujours en arrière ? Parce que sinon, ils tombent dans le bateau."];
 function jadd(who, html) { const c = $("jchat"); if (!c) return;
   const d = document.createElement("div"); d.className = "jm " + who;
-  d.innerHTML = `<span class="who">${who === "bot" ? "JARVIS" : "YOU"}</span>${html}`;
+  d.innerHTML = `<span class="who">${who === "bot" ? "MWESHIMIWA" : "YOU"}</span>${html}`;
   c.appendChild(d); c.scrollTop = c.scrollHeight; }
-function jarvisReply(q) {
+function mweshimiwaReply(q) {
   const s = q.toLowerCase().trim();
   if (/^(hi|hello|hey|habari|hujambo|niaje|sasa|salut|bonjour)\b/.test(s) || /(how are you|uko poa|vipi|ça va)/.test(s))
     return { t: s.match(/salut|bonjour|ça va/) ? "Salut ! Je vais bien, merci. Et toi ? <b>Try:</b> tell me a joke" : s.match(/habari|hujambo|uko|vipi|poa|niaje|sasa/) ? "Niko vizuri, asante kwa kuuliza! Vipi wewe? <b>Jaribu:</b> tell me a joke" : "Hello! Good to see you. <b>Try:</b> what is the time?", i: "greeting · regex" };
@@ -557,12 +557,12 @@ function jarvisReply(q) {
 }
 const jform = $("jform");
 if (jform) {
-  jadd("bot", "Hey — I'm a slice of <b>Jarvis</b>, the Mwesh assistant. Talk to me in English, Kiswahili, Sheng, or French.");
+  jadd("bot", "Hey — I'm a slice of <b>Mweshimiwa</b>. Talk to me in English, Kiswahili, Sheng, or French.");
   document.querySelectorAll("[data-j]").forEach(b => b.addEventListener("click", () => { $("jin").value = b.dataset.j; jform.requestSubmit(); }));
   jform.addEventListener("submit", e => { e.preventDefault();
     const v = $("jin").value.trim(); if (!v) return; $("jin").value = "";
     jadd("usr", v.replace(/</g, "&lt;"));
-    setTimeout(() => { const r = jarvisReply(v);
+    setTimeout(() => { const r = mweshimiwaReply(v);
       jadd("bot", r.t);
       const tr = $("jtrace");
       tr.innerHTML = `<span class="jt">intent → <b>${r.i}</b></span><span class="jt">route → <b>on-device · 0 network</b></span><span class="jt">memory → <b>Room · logged</b></span>`;
