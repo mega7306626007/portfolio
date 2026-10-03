@@ -7,9 +7,9 @@ A world-class, zero-build static portfolio for Emmanuel (Mwesh). Warm editorial 
 ## What's on it
 
 - **Hero + terminal** — live typewriter intro with command hints
-- **Work** — 8 featured projects: Jarvis (mwesh), PesaFlow, SMS Engine, Calendar Rescheduler, Transcriber, PyChat, The Heart v2, Parlons — every row links its real repo + live demo
+- **Work** — 8 featured projects: Mweshimiwa (mwesh), PesaFlow, SMS Engine, Calendar Rescheduler, Transcriber, PyChat, The Heart v2, Parlons — every row links its real repo + live demo
 - **Systems** — honest SVG architecture diagrams of the three flagship systems
-- **Lab** — interactive demos: M-PESA SMS classifier (top-3 ranking + test history), scheduler push simulator (week view), Jarvis intent router (EN × SW × Sheng × FR)
+- **Lab** — interactive demos: M-PESA SMS classifier (top-3 ranking + test history), scheduler push simulator (week view), Mweshimiwa intent router (EN × SW × Sheng × FR)
 - **GitHub feed** — live repo feed pulled from the GitHub API
 - **Contact** — copy-to-clipboard email + GitHub
 
@@ -28,7 +28,7 @@ Already wired to **GitHub Pages**: push to `main` and it goes live (via `.github
 
 - `index.html` — all content (sections, project rows, lab panels)
 - `styles.css` — warm editorial design system (palette, type, components)
-- `script.js` — terminal, classifier, push sim, Jarvis router, modal, command palette, GitHub feed
+- `script.js` — terminal, classifier, push sim, Mweshimiwa router, modal, command palette, GitHub feed
 - `.nojekyll` — Pages helper
 - `.github/workflows/pages.yml` — auto-deploy on push
 
