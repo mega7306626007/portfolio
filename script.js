@@ -263,7 +263,7 @@ const CASES = {
 <li><b>Flask web face</b> — a real UI for it, deploy-ready.</li>
 </ul>
 <div class="cs-stats"><span><b>14</b>modules</span><span><b>0</b>required APIs</span><span><b>Hybrid</b>LLM optional</span><span><b>Live</b>on Render</span></div>
-<p class="cs-end">It's live right now — <a href="https://pychat-hbih.onrender.com/" target="_blank" rel="noopener">go pick a fight with it</a> — and the source is at <a href="https://github.com/mega7306626007/pychat" target="_blank" rel="noopener">github.com/mega7306626007/pychat</a>. Ask it something rude. It has memory.</p>`,
+<p class="cs-end">It's live right now — <a href="https://pychat-hbih.onrender.com/" target="_blank" rel="noopener">go pick a fight with it</a> — and the source is open: <a href="https://github.com/mega7306626007/chatbot-web" target="_blank" rel="noopener">web face</a> plus the <a href="https://github.com/mega7306626007/chatbot_modules" target="_blank" rel="noopener">engine</a>. Ask it something rude. It has memory.</p>`,
 
 "The Heart v4 — Poetry Experience": `
 <p class="cs-hook">You type a line of poetry. A neural net finishes the stanza. <em>In your browser.</em> No server reads your verse, no API key, no waiting — just you, a model, and the audacity to rhyme at midnight.</p>
@@ -522,7 +522,7 @@ fetch(SITE.api).then(r => r.json()).then(all => {
   const repos = all.filter(r => !HIDE.has(r.name)).slice(0, 6);
   $("ghStatus").textContent = `${repos.length} repos, freshest first · live`;
   $("liveStars").textContent = `${all.filter(r => !HIDE.has(r.name)).length} public repos`;
-  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a></div>`).join("");
+  $("ghGrid").innerHTML = repos.map(r => `<div class="gh-card"><h3>${r.name}</h3><p>${((r.description || "No description — code speaks.")).slice(0, 100)}</p><div class="gh-meta"><span class="lg"><i style="background:${LANG[r.language] || "#8a857a"}"></i>${r.language || "mixed"}</span><span>updated ${(r.updated_at || "").slice(0, 10)}</span></div><a href="${r.html_url}" target="_blank" rel="noopener">Open repo →</a>${r.homepage && !r.homepage.includes("mega7306626007.github.io/portfolio") ? `<a href="${r.homepage}" target="_blank" rel="noopener">Live ↗</a>` : ""}</div>`).join("");
   revealGh();
 }).catch(() => { $("ghStatus").textContent = "visit github directly:";
   $("ghGrid").innerHTML = `<div class="gh-card"><h3>mwesh</h3><p>Jarvis voice assistant — on-device ONNX, Room memory.</p><a href="${SITE.github}/mwesh" target="_blank" rel="noopener">Open GitHub →</a></div><div class="gh-card"><h3>PesaFlow</h3><p>Student finance x adaptive intelligence.</p><a href="${SITE.github}/PesaFlow" target="_blank" rel="noopener">Open GitHub →</a></div>`;
