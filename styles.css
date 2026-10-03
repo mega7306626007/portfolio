@@ -379,6 +379,8 @@ input[type=range] { width: 100%; accent-color: var(--accent); margin: 6px 0 16px
 .principles .n { font-family: var(--font-s); font-style: italic; color: var(--accent); font-size: 18px; }
 .principles b { display: block; font-size: 14px; margin-bottom: 4px; }
 .principles span { color: var(--muted); font-size: 13px; }
+.cv-note { margin-top: 26px; border-left: 3px solid var(--accent); padding-left: 14px; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.cv-note i { font-family: var(--font-s); color: var(--ink); }
 .about-card { background: var(--dark); color: var(--cream); border-radius: var(--r); padding: 30px; }
 .about-card .dim { color: #8a857a; }
 .about-json { font-size: 11px; line-height: 1.85; color: #b3ab97; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 16px; overflow-x: auto; white-space: pre-wrap; font-family: var(--font-m); margin: 14px 0 18px; }

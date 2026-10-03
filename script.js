@@ -1,4 +1,4 @@
-const SITE = { email: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
+const SITE = { email: "lemauelmwesh@gmail.com", email2: "lemuelmwesh@gmail.com", github: "https://github.com/mega7306626007", api: "https://api.github.com/users/mega7306626007/repos?sort=updated&per_page=12" };
 const $ = id => document.getElementById(id);
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -274,6 +274,7 @@ const CASES = {
 <li><b>In-browser neural continuation</b> — model served as static assets, inference on your CPU.</li>
 <li><b>Live on Vercel</b> — zero backend, zero cost, zero telemetry.</li>
 <li><b>The Heart family</b> — v2 added voice prompts; v4 is the one that <i>writes back.</i></li>
+<li><b>The book it came from</b> — I'm the author of <i>THE HEART</i>, a published poetry anthology on human emotion and reflection (cover: a candle in torn paper, wildflowers in front). The sites are its digital siblings.</li>
 </ul>
 <div class="cs-stats"><span><b>0</b>servers</span><span><b>In-browser</b>neural net</span><span><b>v4</b>current</span><span><b>Live</b>on Vercel</span></div>
 <p class="cs-end">Don't take my word for it: <a href="https://the-heart-4.vercel.app" target="_blank" rel="noopener">open it</a>, type one honest line, and see what the machine dares to say back. <a href="https://github.com/mega7306626007/the-heart-4" target="_blank" rel="noopener">Source here</a>.</p>`,
@@ -292,7 +293,20 @@ const CASES = {
 <li><b>Zero accounts, zero keys</b> — install, learn, exist.</li>
 </ul>
 <div class="cs-stats"><span><b>65</b>lessons</span><span><b>~860</b>phrases</span><span><b>13</b>exercise types</span><span><b>SW·ENG·SHENG</b>bridge</span></div>
-<p class="cs-end">French for Kenyans, built by one. <a href="https://github.com/mega7306626007/Parlons" target="_blank" rel="noopener">Clone it</a> — Simba is waiting, and he does not go easy.</p>`
+<p class="cs-end">French for Kenyans, built by one. <a href="https://github.com/mega7306626007/Parlons" target="_blank" rel="noopener">Clone it</a> — Simba is waiting, and he does not go easy.</p>`,
+
+"Global Digest — Daily News": `
+<p class="cs-hook">The news is free, and reading it costs you your whole morning — twenty tabs, three apps, and an algorithm deciding what matters. So I built a newspaper that <em>builds itself</em> before I wake up.</p>
+<h5>The setup</h5>
+<p>A Python static builder pulls the day's major stories — 16 world, 10 Kenyan — and compiles them into a clean digest plus a <i>latest.json</i> feed. No CMS, no backend, no hosting bill: just GitHub Pages doing what it does best.</p>
+<h5>Why it works</h5>
+<ul>
+<li><b>Zero moving parts</b> — static files. Nothing to hack, nothing to pay for, nothing to wake up and fix.</li>
+<li><b>Kenya first</b> — world news <i>and</i> home news, side by side, every single morning.</li>
+<li><b>Machine-readable</b> — the JSON feed means anything can consume the digest next.</li>
+</ul>
+<div class="cs-stats"><span><b>~20</b>stories daily</span><span><b>0</b>servers</span><span><b>0</b>shillings hosting</span><span><b>Daily</b>self-built</span></div>
+<p class="cs-end">Read today's edition <a href="https://mega7306626007.github.io/global-digest/" target="_blank" rel="noopener">here</a> — it rebuilt itself this morning whether I woke up or not. <a href="https://github.com/mega7306626007/global-digest" target="_blank" rel="noopener">Source here</a>.</p>`
 };
 
 const overlay = $("overlay"), modal = $("modal");
