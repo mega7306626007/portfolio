@@ -384,6 +384,8 @@ input[type=range] { width: 100%; accent-color: var(--accent); margin: 6px 0 16px
 .about-json { font-size: 11px; line-height: 1.85; color: #b3ab97; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 16px; overflow-x: auto; white-space: pre-wrap; font-family: var(--font-m); margin: 14px 0 18px; }
 .about-card .btn { width: 100%; background: var(--accent); color: #000; }
 .about-card .btn:hover { background: #c99a3e; }
+.about-card .btn.ghost { background: transparent; border-color: rgba(237,231,214,.32); color: var(--cream); }
+.about-card .btn.ghost:hover { border-color: var(--cream); background: rgba(237,231,214,.08); }
 
 .stack-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
 @media (max-width: 900px) { .stack-grid { grid-template-columns: 1fr 1fr; } }
